@@ -38,9 +38,12 @@ public class Principal extends javax.swing.JFrame {
         dskPrincipal = new javax.swing.JDesktopPane();
         mnuPrincipal = new javax.swing.JMenuBar();
         mnuCadastro = new javax.swing.JMenu();
-        mnuCadastroA = new javax.swing.JMenuItem();
-        mnuCadastroB = new javax.swing.JMenuItem();
-        mnuCadastroC = new javax.swing.JMenuItem();
+        mnuCadastroUsuario = new javax.swing.JMenuItem();
+        mnuCadastroContaPrincipal = new javax.swing.JMenuItem();
+        mnuCadastroSubConta = new javax.swing.JMenuItem();
+        mnuCadastroEmpresa = new javax.swing.JMenuItem();
+        mnuCadastroJogo = new javax.swing.JMenuItem();
+        mnuCadastroRelatorio = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -57,29 +60,53 @@ public class Principal extends javax.swing.JFrame {
 
         mnuCadastro.setText("Cadastro");
 
-        mnuCadastroA.setText("Usuários");
-        mnuCadastroA.addActionListener(new java.awt.event.ActionListener() {
+        mnuCadastroUsuario.setText("Usuários");
+        mnuCadastroUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnuCadastroClienteActionPerformed(evt);
+                mnuCadastroUsuarioActionPerformed(evt);
             }
         });
-        mnuCadastro.add(mnuCadastroA);
+        mnuCadastro.add(mnuCadastroUsuario);
 
-        mnuCadastroB.setText("Conta Principal");
-        mnuCadastroB.addActionListener(new java.awt.event.ActionListener() {
+        mnuCadastroContaPrincipal.setText("Conta Principal");
+        mnuCadastroContaPrincipal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnuCadastroBActionPerformed(evt);
+                mnuCadastroContaPrincipalActionPerformed(evt);
             }
         });
-        mnuCadastro.add(mnuCadastroB);
+        mnuCadastro.add(mnuCadastroContaPrincipal);
 
-        mnuCadastroC.setText("Subcontas");
-        mnuCadastroC.addActionListener(new java.awt.event.ActionListener() {
+        mnuCadastroSubConta.setText("Subcontas");
+        mnuCadastroSubConta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnuCadastroCActionPerformed(evt);
+                mnuCadastroSubContaActionPerformed(evt);
             }
         });
-        mnuCadastro.add(mnuCadastroC);
+        mnuCadastro.add(mnuCadastroSubConta);
+
+        mnuCadastroEmpresa.setText("Empresas");
+        mnuCadastroEmpresa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuCadastroEmpresaActionPerformed(evt);
+            }
+        });
+        mnuCadastro.add(mnuCadastroEmpresa);
+
+        mnuCadastroJogo.setText("Jogos");
+        mnuCadastroJogo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuCadastroJogoActionPerformed(evt);
+            }
+        });
+        mnuCadastro.add(mnuCadastroJogo);
+
+        mnuCadastroRelatorio.setText("Relatorios");
+        mnuCadastroRelatorio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuCadastroRelatorioActionPerformed(evt);
+            }
+        });
+        mnuCadastro.add(mnuCadastroRelatorio);
 
         mnuPrincipal.add(mnuCadastro);
 
@@ -99,50 +126,81 @@ public class Principal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void mnuCadastroBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCadastroBActionPerformed
+    private void mnuCadastroContaPrincipalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCadastroContaPrincipalActionPerformed
         // Recupera uma instância visível e não-iconficada da janela
-        IjfContaPrincipal internaB = IjfContaPrincipal.getInstance();
+        IjfContaPrincipal ijfContaPrincipal = IjfContaPrincipal.getInstance();
 
         // Se a janela ainda não foi adicionada à área de trabalho...
         if (!Arrays
                 .asList(dskPrincipal.getAllFrames())
-                .contains(internaB)) {
-            dskPrincipal.add(internaB);
+                .contains(ijfContaPrincipal)) {
+            dskPrincipal.add(ijfContaPrincipal);
         }
 
-        tornarVisivel(internaB);
+        tornarVisivel(ijfContaPrincipal);
 
-    }//GEN-LAST:event_mnuCadastroBActionPerformed
+    }//GEN-LAST:event_mnuCadastroContaPrincipalActionPerformed
 
-    private void mnuCadastroCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCadastroCActionPerformed
+    private void mnuCadastroSubContaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCadastroSubContaActionPerformed
         // Recupera uma instância visível e não-iconficada da janela
-        InternaC internaC = InternaC.getInstance();
+        IjfSubConta ijfSubConta = IjfSubConta.getInstance();
 
         // Se a janela ainda não foi adicionada à área de trabalho...
         if (!Arrays
                 .asList(dskPrincipal.getAllFrames())
-                .contains(internaC)) {
-            dskPrincipal.add(internaC);
+                .contains(ijfSubConta)) {
+            dskPrincipal.add(ijfSubConta);
         }
 
-        tornarVisivel(internaC);
-    }//GEN-LAST:event_mnuCadastroCActionPerformed
+        tornarVisivel(ijfSubConta);
+    }//GEN-LAST:event_mnuCadastroSubContaActionPerformed
 
-    private void mnuCadastroClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCadastroClienteActionPerformed
+    private void mnuCadastroEmpresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCadastroEmpresaActionPerformed
         // TODO add your handling code here:
-        IjfUsuario ijfCliente = IjfUsuario.getInstance();
+        IjfEmpresa ijfEmpresa = IjfEmpresa.getInstance();
 
         // Se a janela ainda não foi adicionada à área de trabalho...
         if (!Arrays
                 .asList(dskPrincipal.getAllFrames())
-                .contains(ijfCliente)) {
-            dskPrincipal.add(ijfCliente);
+                .contains(ijfEmpresa)) {
+            dskPrincipal.add(ijfEmpresa);
         }
 
-        tornarVisivel(ijfCliente);
+        tornarVisivel(ijfEmpresa);
+    }//GEN-LAST:event_mnuCadastroEmpresaActionPerformed
 
+    private void mnuCadastroJogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCadastroJogoActionPerformed
+        // TODO add your handling code here:      
+        IjfJogo ijfJogo = IjfJogo.getInstance();
 
-    }//GEN-LAST:event_mnuCadastroClienteActionPerformed
+        // Se a janela ainda não foi adicionada à área de trabalho...
+        if (!Arrays
+                .asList(dskPrincipal.getAllFrames())
+                .contains(ijfJogo)) {
+            dskPrincipal.add(ijfJogo);
+        }
+
+        tornarVisivel(ijfJogo);
+    }//GEN-LAST:event_mnuCadastroJogoActionPerformed
+
+    private void mnuCadastroRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCadastroRelatorioActionPerformed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_mnuCadastroRelatorioActionPerformed
+
+    private void mnuCadastroUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCadastroUsuarioActionPerformed
+        // TODO add your handling code here:
+        IjfUsuario ijfUsuario = IjfUsuario.getInstance();
+
+        // Se a janela ainda não foi adicionada à área de trabalho...
+        if (!Arrays
+                .asList(dskPrincipal.getAllFrames())
+                .contains(ijfUsuario)) {
+            dskPrincipal.add(ijfUsuario);
+        }
+
+        tornarVisivel(ijfUsuario);
+    }//GEN-LAST:event_mnuCadastroUsuarioActionPerformed
 
     /**
      * Reuso de funcionalidade de exibição de janela interna.
@@ -211,9 +269,12 @@ public class Principal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane dskPrincipal;
     private javax.swing.JMenu mnuCadastro;
-    private javax.swing.JMenuItem mnuCadastroA;
-    private javax.swing.JMenuItem mnuCadastroB;
-    private javax.swing.JMenuItem mnuCadastroC;
+    private javax.swing.JMenuItem mnuCadastroContaPrincipal;
+    private javax.swing.JMenuItem mnuCadastroEmpresa;
+    private javax.swing.JMenuItem mnuCadastroJogo;
+    private javax.swing.JMenuItem mnuCadastroRelatorio;
+    private javax.swing.JMenuItem mnuCadastroSubConta;
+    private javax.swing.JMenuItem mnuCadastroUsuario;
     private javax.swing.JMenuBar mnuPrincipal;
     // End of variables declaration//GEN-END:variables
 }

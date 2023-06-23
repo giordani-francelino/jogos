@@ -7,6 +7,7 @@
 package com.mycompany.jogos;
 
 import com.mycompany.jogos.entidades.Usuario;
+import com.mycompany.jogos.repositorio.DbConnection;
 import com.mycompany.jogos.repositorio.UsuarioDao;
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,7 +18,12 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -298,14 +304,23 @@ public class IjfUsuario extends javax.swing.JInternalFrame {
     private void jbtListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtListarActionPerformed
         // TODO add your handling code here:
         try (InputStream in = getClass().getResourceAsStream("/usuarios.jasper")) {
-            
-//                        JasperPrint jasperPrint ;
-//                        = JasperFillManager.
 
-            
+            JasperPrint jasperPrint = JasperFillManager.fillReport(
+                    in, null, DbConnection.getConnection());
+            JasperViewer jasperViewer = new JasperViewer(jasperPrint, false);
+            JDialog jDialog = new JDialog();
+            jDialog.setContentPane(jasperViewer.getContentPane());
+            jDialog.setSize(jasperViewer.getSize());
+            jDialog.setTitle("Listagem de Usuários");
+            jDialog.setModal(true);
+            jDialog.setVisible(true);
+
         } catch (IOException ex) {
             Logger.getLogger(IjfUsuario.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (JRException ex) {
+            Logger.getLogger(IjfUsuario.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }//GEN-LAST:event_jbtListarActionPerformed
 
     private void getDadosTela() {

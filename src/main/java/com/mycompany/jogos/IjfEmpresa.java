@@ -11,21 +11,21 @@ package com.mycompany.jogos;
  * @author Luis Guisso <luis dot guisso at ifnmg dot edu dot br>
  * @version 0.0.1, 16/08/2021
  */
-public class InternaC extends javax.swing.JInternalFrame {
+public class IjfEmpresa extends javax.swing.JInternalFrame {
     
-    private static InternaC self;
+    private static IjfEmpresa self;
 
     /**
      * Creates new form InternaC
      */
-    private InternaC() {
+    private IjfEmpresa() {
         initComponents();
     }
     
-    public static InternaC getInstance() {
+    public static IjfEmpresa getInstance() {
         // Caso a janela ainda não tenha sido instanciada
         if(self == null) {
-            self = new InternaC();
+            self = new IjfEmpresa();
         }
         
         return self;
@@ -76,7 +76,7 @@ public class InternaC extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jbtAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jbtRecuperar, javax.swing.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE)
+                .addComponent(jbtRecuperar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(jbtExcluir)
                 .addGap(18, 18, 18)

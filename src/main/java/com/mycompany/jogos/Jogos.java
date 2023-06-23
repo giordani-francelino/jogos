@@ -15,7 +15,8 @@ import java.util.List;
 import java.util.Properties;
 
 /**
- *
+ *            <systemPath>"C:/dev/bd/jogos/jasperreports-6.20.5.jar"</systemPath>
+
  * @author Your Name &lt;francelino at ifnmg&gt;
  */
 public class Jogos {
