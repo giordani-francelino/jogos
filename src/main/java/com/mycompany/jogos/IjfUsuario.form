@@ -207,18 +207,15 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel5">
           <Properties>
-            <Property name="text" type="java.lang.String" value="NASCIMENTO (yyyy-mm-dd)"/>
+            <Property name="text" type="java.lang.String" value="NASCIMENTO (dd/mmyyyy)"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JFormattedTextField" name="jftDataNascimento">
           <Properties>
             <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-              <Format format="yyyy-mm-dd" subtype="-1" type="1"/>
+              <Format subtype="1" type="1"/>
             </Property>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jftDataNascimentoActionPerformed"/>
-          </Events>
         </Component>
       </SubComponents>
     </Container>

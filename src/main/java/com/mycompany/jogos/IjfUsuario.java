@@ -133,14 +133,9 @@ public class IjfUsuario extends javax.swing.JInternalFrame {
 
         jLabel4.setText("E-MAIL");
 
-        jLabel5.setText("NASCIMENTO (yyyy-mm-dd)");
+        jLabel5.setText("NASCIMENTO (dd/mmyyyy)");
 
-        jftDataNascimento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("yyyy-mm-dd"))));
-        jftDataNascimento.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jftDataNascimentoActionPerformed(evt);
-            }
-        });
+        jftDataNascimento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
 
         javax.swing.GroupLayout jpPrincipalLayout = new javax.swing.GroupLayout(jpPrincipal);
         jpPrincipal.setLayout(jpPrincipalLayout);
@@ -247,10 +242,6 @@ public class IjfUsuario extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jbtInserirActionPerformed
 
-    private void jftDataNascimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jftDataNascimentoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jftDataNascimentoActionPerformed
-
     private void jbtAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAtualizarActionPerformed
         getDadosTela();
         try {
@@ -303,23 +294,24 @@ public class IjfUsuario extends javax.swing.JInternalFrame {
 
     private void jbtListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtListarActionPerformed
         // TODO add your handling code here:
-        try (InputStream in = getClass().getResourceAsStream("/usuarios.jasper")) {
-
-            JasperPrint jasperPrint = JasperFillManager.fillReport(
-                    in, null, DbConnection.getConnection());
-            JasperViewer jasperViewer = new JasperViewer(jasperPrint, false);
-            JDialog jDialog = new JDialog();
-            jDialog.setContentPane(jasperViewer.getContentPane());
-            jDialog.setSize(jasperViewer.getSize());
-            jDialog.setTitle("Listagem de Usuários");
-            jDialog.setModal(true);
-            jDialog.setVisible(true);
-
-        } catch (IOException ex) {
-            Logger.getLogger(IjfUsuario.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (JRException ex) {
-            Logger.getLogger(IjfUsuario.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        try (InputStream in = getClass().getResourceAsStream("/usuarios.jasper")) {
+//
+//            JasperPrint jasperPrint = JasperFillManager.fillReport(
+//                    in, null, DbConnection.getConnection());
+//            JasperViewer jasperViewer = new JasperViewer(jasperPrint, false);
+//            JDialog jDialog = new JDialog();
+//            jDialog.setContentPane(jasperViewer.getContentPane());
+//            jDialog.setSize(jasperViewer.getSize());
+//            jDialog.setTitle("Listagem de Usuários");
+//            jDialog.setModal(true);
+//            jDialog.setVisible(true);
+//
+//        } catch (IOException ex) {
+//            Logger.getLogger(IjfUsuario.class.getName()).log(Level.SEVERE, null, ex);
+//        } catch (JRException ex) {
+//            Logger.getLogger(IjfUsuario.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+            new Util().relatorios("/usuarios.jasper", "Listagem de Usuários");
 
     }//GEN-LAST:event_jbtListarActionPerformed
 
@@ -332,7 +324,8 @@ public class IjfUsuario extends javax.swing.JInternalFrame {
         usuario.setEmail(jtfEmail.getText());
         usuario.setPaís(jtfPais.getText());
         if (!jftDataNascimento.getText().equals("")) {
-            usuario.setDataNascimento(LocalDate.parse(jftDataNascimento.getText()));
+            DateTimeFormatter formatters = DateTimeFormatter.ofPattern("d/MM/uuuu");
+            usuario.setDataNascimento(LocalDate.parse(jftDataNascimento.getText(),formatters));
         } else {
             usuario.setDataNascimento(null);
         }
@@ -348,7 +341,7 @@ public class IjfUsuario extends javax.swing.JInternalFrame {
         jtfPais.setText(usuario.getPaís());
         if (usuario.getDataNascimento() != null) {
             Date date = Date.valueOf(usuario.getDataNascimento());
-            jftDataNascimento.setText(new SimpleDateFormat("yyyy-MM-dd").format(date));
+            jftDataNascimento.setText(new SimpleDateFormat("dd/MM/yyyy").format(date));
         } else {
             jftDataNascimento.setText("");
         }
