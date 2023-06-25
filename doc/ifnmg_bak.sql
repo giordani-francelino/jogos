@@ -171,8 +171,43 @@ CREATE TABLE Console(
 nome VARCHAR(20),
 versao VARCHAR(20),
 tipo VARCHAR(20),
-CONSTRAINT pkConsole PRIMARY KEY (nome)
+CONSTRAINT pkConsole PRIMARY KEY (nome, versao)
 );
+
+insert into Console(nome, versao, tipo) values ('PlayStation 2','2', 'portátil');
+insert into Console(nome, versao, tipo) values ('PlayStation','1', 'não portátil');
+insert into Console(nome, versao, tipo) values ('Nintendo DS','2', 'portátil');
+insert into Console(nome, versao, tipo) values ('Nintendo DS','3', 'portátil');
+insert into Console(nome, versao, tipo) values ('Nintendo DS','1', 'portátil');
+insert into Console(nome, versao, tipo) values ('Nintendo DS','4', 'portátil');
+insert into Console(nome, versao, tipo) values ('Nintendo Switch','1', 'portátil');
+insert into Console(nome, versao, tipo) values ('Nintendo Switch','2', 'portátil');
+insert into Console(nome, versao, tipo) values ('Nintendo Switch','3', 'portátil');
+insert into Console(nome, versao, tipo) values ('Nintendo Switch','4', 'portátil');
+
+CREATE TABLE Usuarios(
+cpf VARCHAR(14),
+nome VARCHAR(50),
+pais VARCHAR(50),
+email VARCHAR(50),
+dataNascimento DATE,
+CONSTRAINT pkUsuarios PRIMARY KEY (cpf)
+);
+
+SELECT * FROM USUARIOS;
+INSERT INTO USUARIOS (cpf,nome,pais,email,dataNascimento) VALUES ('15648615270','ANA CAROLINA','JAPAO','ANACAROLINA@GMAIL.COM',TO_DATE('2005/05/12','yyyy/mm/dd'));
+INSERT INTO USUARIOS (cpf,nome,pais,email,dataNascimento) VALUES ('48275389610','BEATRIZ EUFRASIA','JAPAO','BEATRIZ@GMAIL.COM',TO_DATE('2006/01/18','yyyy/mm/dd'));
+INSERT INTO USUARIOS (cpf,nome,pais,email,dataNascimento) VALUES ('84578915310','ANTONIO JOAO','BRASIL','ANTONIO@GMAIL.COM',TO_DATE('2008/02/18','yyyy/mm/dd'));
+INSERT INTO USUARIOS (cpf,nome,pais,email,dataNascimento) VALUES ('48521325611','JOSE FILHO','BRASIL','JOSEFILHO@GMAIL.COM',TO_DATE('2007/03/16','yyyy/mm/dd'));
+INSERT INTO USUARIOS (cpf,nome,pais,email,dataNascimento) VALUES ('85675489652','DANIEL SILVA','BRASIL','DANIEL@GMAIL.COM',TO_DATE('1986/08/08','yyyy/mm/dd'));
+INSERT INTO USUARIOS (cpf,nome,pais,email,dataNascimento) VALUES ('84578652312','SHEILA CARVALHO','US','SHEILA@GMAIL.COM',TO_DATE('1997/09/04','yyyy/mm/dd'));
+INSERT INTO USUARIOS (cpf,nome,pais,email,dataNascimento) VALUES ('85478628910','VICENTE RAPOSO','CHINA','VIDENTE@GMAIL.COM',TO_DATE('2000/10/23','yyyy/mm/dd'));
+INSERT INTO USUARIOS (cpf,nome,pais,email,dataNascimento) VALUES ('02894652723','LUIZ CARLOS DOS SANTOS','SENEGAL','LUIZ@GMAIL.COM',TO_DATE('2012/11/15','yyyy/mm/dd'));
+INSERT INTO USUARIOS (cpf,nome,pais,email,dataNascimento) VALUES ('87546982359','CARLOS JOSE','ARGENTINA','CARLOS@GMAIL.COM',TO_DATE('2002/07/23','yyyy/mm/dd'));
+INSERT INTO USUARIOS (cpf,nome,pais,email,dataNascimento) VALUES ('84598523659','WELLINGTON PASCOAL','BELGICA','WELLINGTON@GMAIL.COM',TO_DATE('1998/12/05','yyyy/mm/dd'));
+
+
+
 
 
 CREATE TABLE Conta(
@@ -240,6 +275,7 @@ REFERENCES Jogos (id),
 CONSTRAINT fkJogoContaConta foreign KEY (loginConta)
 REFERENCES Conta (login)
 );
+
 SELECT * FROM JOGOCONTA;
 insert into JogoConta(loginConta, idJogo, dataJogo, tempoDeJogo) values ('ANA', '3',  TO_DATE('2023/04/05','yyyy/mm/dd'),260.0);
 insert into JogoConta(loginConta, idJogo, dataJogo, tempoDeJogo) values ('ANA-SUB', '3',  TO_DATE('2023/01/05','yyyy/mm/dd'),45);
@@ -266,6 +302,17 @@ CONSTRAINT fkJogoCompradoConta foreign KEY (loginConta)
 REFERENCES Conta (login)
 );
 
+insert into JogoComprado(loginConta, idJogo, codigoAtivacao, preco) values ('ANA', '3', '1',260.0);
+insert into JogoComprado(loginConta, idJogo, codigoAtivacao, preco) values ('ANA-SUB', '3', '2',45);
+insert into JogoComprado(loginConta, idJogo, codigoAtivacao, preco) values ('BEATRIZ', '3', '3',70);
+insert into JogoComprado(loginConta, idJogo, codigoAtivacao, preco) values ('BEATRIZ-SUB', '3', '4',150);
+insert into JogoComprado(loginConta, idJogo, codigoAtivacao, preco) values ('ANTONIO', '3',  '5',75);
+insert into JogoComprado(loginConta, idJogo, codigoAtivacao, preco) values ('ANTONIO-SUB', '3', '6',59);
+insert into JogoComprado(loginConta, idJogo, codigoAtivacao, preco) values ('JOSE', '3',  '7',123);
+insert into JogoComprado(loginConta, idJogo, codigoAtivacao, preco) values ('JOSE-SUB', '3', '8',456);
+insert into JogoComprado(loginConta, idJogo, codigoAtivacao, preco) values ('DANIEL', '3',  '9',630);
+insert into JogoComprado(loginConta, idJogo, codigoAtivacao, preco) values ('DANIEL-SUB', '3', '10',120);
+
 
 CREATE TABLE ItensAdiquiridos(
 id VARCHAR(15) NOT NULL,
@@ -281,18 +328,31 @@ CONSTRAINT fkItensAdiquiridosItensAdicionais foreign KEY (nomeItensAdicionais, i
 REFERENCES ItensAdicionais (nome, idJogo)
 );
 
-
+SELECT * FROM ConsoleDaConta;
 CREATE TABLE ConsoleDaConta(
 numeroDeSerie VARCHAR(15),
 nomeConsole VARCHAR(20),
+versaoConsole VARCHAR(20),
 loginConta VARCHAR(15),
 CONSTRAINT pkConsoleDaConta PRIMARY KEY (numeroDeSerie),
-CONSTRAINT ukConsoleDaConta unique (nomeConsole,loginConta),
-CONSTRAINT fkConsoleDaContaConsole foreign KEY (nomeConsole)
-REFERENCES Console (nome),
+CONSTRAINT ukConsoleDaConta unique (nomeConsole,versaoConsole,loginConta),
+CONSTRAINT fkConsoleDaContaConsole foreign KEY (nomeConsole, versaoConsole)
+REFERENCES Console (nome,versao),
 CONSTRAINT fkConsoleDaContaConta foreign KEY (loginConta)
 REFERENCES Conta (login)
 );
+
+insert into ConsoleDaConta(loginConta,  numeroDeSerie, nomeConsole, versaoConsole) values ('ANA',  '1','PlayStation', '1');
+insert into ConsoleDaConta(loginConta,  numeroDeSerie, nomeConsole, versaoConsole) values ('ANA-SUB', '2','PlayStation', '1');
+insert into ConsoleDaConta(loginConta,  numeroDeSerie, nomeConsole, versaoConsole) values ('BEATRIZ',  '3','PlayStation', '1');
+insert into ConsoleDaConta(loginConta,  numeroDeSerie, nomeConsole, versaoConsole) values ('BEATRIZ-SUB', '4','PlayStation', '1');
+insert into ConsoleDaConta(loginConta,  numeroDeSerie, nomeConsole, versaoConsole) values ('ANTONIO',  '5','PlayStation', '1');
+insert into ConsoleDaConta(loginConta,  numeroDeSerie, nomeConsole, versaoConsole) values ('ANTONIO-SUB', '6','PlayStation', '1');
+insert into ConsoleDaConta(loginConta,  numeroDeSerie, nomeConsole, versaoConsole) values ('JOSE',  '7','PlayStation', '1');
+insert into ConsoleDaConta(loginConta,  numeroDeSerie, nomeConsole, versaoConsole) values ('JOSE-SUB', '8','PlayStation', '1');
+insert into ConsoleDaConta(loginConta,  numeroDeSerie, nomeConsole, versaoConsole) values ('DANIEL', '9','PlayStation', '1');
+insert into ConsoleDaConta(loginConta,  numeroDeSerie, nomeConsole, versaoConsole) values ('DANIEL-SUB', '10','PlayStation', '1');
+
 
 
 CREATE TABLE consoleJogosComprados(
@@ -305,27 +365,16 @@ CONSTRAINT fkconsoleJogosCompradosConsoleDaConta foreign KEY (numeroDeSerieConso
 REFERENCES ConsoleDaConta (numeroDeSerie)
 );
 
-
-CREATE TABLE Usuarios(
-cpf VARCHAR(14),
-nome VARCHAR(50),
-pais VARCHAR(50),
-email VARCHAR(50),
-dataNascimento DATE,
-CONSTRAINT pkUsuarios PRIMARY KEY (cpf)
-);
-
-SELECT * FROM USUARIOS;
-INSERT INTO USUARIOS (cpf,nome,pais,email,dataNascimento) VALUES ('15648615270','ANA CAROLINA','JAPAO','ANACAROLINA@GMAIL.COM',TO_DATE('2005/05/12','yyyy/mm/dd'));
-INSERT INTO USUARIOS (cpf,nome,pais,email,dataNascimento) VALUES ('48275389610','BEATRIZ EUFRASIA','JAPAO','BEATRIZ@GMAIL.COM',TO_DATE('2006/01/18','yyyy/mm/dd'));
-INSERT INTO USUARIOS (cpf,nome,pais,email,dataNascimento) VALUES ('84578915310','ANTONIO JOAO','BRASIL','ANTONIO@GMAIL.COM',TO_DATE('2008/02/18','yyyy/mm/dd'));
-INSERT INTO USUARIOS (cpf,nome,pais,email,dataNascimento) VALUES ('48521325611','JOSE FILHO','BRASIL','JOSEFILHO@GMAIL.COM',TO_DATE('2007/03/16','yyyy/mm/dd'));
-INSERT INTO USUARIOS (cpf,nome,pais,email,dataNascimento) VALUES ('85675489652','DANIEL SILVA','BRASIL','DANIEL@GMAIL.COM',TO_DATE('1986/08/08','yyyy/mm/dd'));
-INSERT INTO USUARIOS (cpf,nome,pais,email,dataNascimento) VALUES ('84578652312','SHEILA CARVALHO','US','SHEILA@GMAIL.COM',TO_DATE('1997/09/04','yyyy/mm/dd'));
-INSERT INTO USUARIOS (cpf,nome,pais,email,dataNascimento) VALUES ('85478628910','VICENTE RAPOSO','CHINA','VIDENTE@GMAIL.COM',TO_DATE('2000/10/23','yyyy/mm/dd'));
-INSERT INTO USUARIOS (cpf,nome,pais,email,dataNascimento) VALUES ('02894652723','LUIZ CARLOS DOS SANTOS','SENEGAL','LUIZ@GMAIL.COM',TO_DATE('2012/11/15','yyyy/mm/dd'));
-INSERT INTO USUARIOS (cpf,nome,pais,email,dataNascimento) VALUES ('87546982359','CARLOS JOSE','ARGENTINA','CARLOS@GMAIL.COM',TO_DATE('2002/07/23','yyyy/mm/dd'));
-INSERT INTO USUARIOS (cpf,nome,pais,email,dataNascimento) VALUES ('84598523659','WELLINGTON PASCOAL','BELGICA','WELLINGTON@GMAIL.COM',TO_DATE('1998/12/05','yyyy/mm/dd'));
+insert into consoleJogosComprados(codigoAtivacaoJogosComprados,numeroDeSerieConsole) values ('1','1');
+insert into consoleJogosComprados(codigoAtivacaoJogosComprados,numeroDeSerieConsole) values ('2','2');
+insert into consoleJogosComprados(codigoAtivacaoJogosComprados,numeroDeSerieConsole) values ('3','3');
+insert into consoleJogosComprados(codigoAtivacaoJogosComprados,numeroDeSerieConsole) values ('4','4');
+insert into consoleJogosComprados(codigoAtivacaoJogosComprados,numeroDeSerieConsole) values ('5','5');
+insert into consoleJogosComprados(codigoAtivacaoJogosComprados,numeroDeSerieConsole) values ('6','6');
+insert into consoleJogosComprados(codigoAtivacaoJogosComprados,numeroDeSerieConsole) values ('7','7');
+insert into consoleJogosComprados(codigoAtivacaoJogosComprados,numeroDeSerieConsole) values ('8','8');
+insert into consoleJogosComprados(codigoAtivacaoJogosComprados,numeroDeSerieConsole) values ('9','9');
+insert into consoleJogosComprados(codigoAtivacaoJogosComprados,numeroDeSerieConsole) values ('10','10');
 
 
 
@@ -414,17 +463,28 @@ insert into TrofeusRecebidos(loginConta, idTrofeu, dataObtencao) values ('JOSE-S
 insert into TrofeusRecebidos(loginConta, idTrofeu, dataObtencao) values ('DANIEL', '10',  TO_DATE('2023/04/05','yyyy/mm/dd'));
 insert into TrofeusRecebidos(loginConta, idTrofeu, dataObtencao) values ('DANIEL-SUB', '10',  TO_DATE('2023/04/05','yyyy/mm/dd'));
 
-
+SELECT * FROM ConsolesDeJogos;
 CREATE TABLE ConsolesDeJogos(
 idJogo VARCHAR(15),
 nomeConsole VARCHAR(20),
-CONSTRAINT pkConsolesDeJogos PRIMARY KEY (idJogo, nomeConsole),
+versaoConsole VARCHAR(20),
+CONSTRAINT pkConsolesDeJogos PRIMARY KEY (idJogo, nomeConsole, versaoConsole),
 CONSTRAINT fkConsolesDeJogosConta foreign KEY (idJogo)
 REFERENCES Jogos (id),
-CONSTRAINT fkConsolesDeJogosConsole foreign KEY (nomeConsole)
-REFERENCES Console (nome)
+CONSTRAINT fkConsolesDeJogosConsole foreign KEY (nomeConsole,versaoConsole)
+REFERENCES Console (nome,versao)
 );
 
+insert into ConsolesDeJogos (idJogo, nomeConsole, versaoConsole) values ('1','PlayStation', '1');
+insert into ConsolesDeJogos (idJogo, nomeConsole, versaoConsole) values ('2','PlayStation', '1');
+insert into ConsolesDeJogos (idJogo, nomeConsole, versaoConsole) values ('3','PlayStation', '1');
+insert into ConsolesDeJogos (idJogo, nomeConsole, versaoConsole) values ('4','PlayStation', '1');
+insert into ConsolesDeJogos (idJogo, nomeConsole, versaoConsole) values ('5','PlayStation', '1');
+insert into ConsolesDeJogos (idJogo, nomeConsole, versaoConsole) values ('6','PlayStation', '1');
+insert into ConsolesDeJogos (idJogo, nomeConsole, versaoConsole) values ('7','PlayStation', '1');
+insert into ConsolesDeJogos (idJogo, nomeConsole, versaoConsole) values ('8','PlayStation', '1');
+insert into ConsolesDeJogos (idJogo, nomeConsole, versaoConsole) values ('9','PlayStation', '1');
+insert into ConsolesDeJogos (idJogo, nomeConsole, versaoConsole) values ('10','PlayStation', '1');
 
 CREATE TABLE ConsoleDaContaItensAdiquiridos(
 numeroDeSerieConsole VARCHAR(15),
