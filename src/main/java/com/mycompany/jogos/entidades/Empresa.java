@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ *javac -Xlint C:\dev\bd\jogos\src\main\java\com\mycompany\jogos\entidades\Empresa.java
  * @author Caixa
  */
 /**
@@ -51,8 +51,8 @@ public class Empresa {
     }
 
     public Empresa() {
-        jogosDistribuidos = new ArrayList();
-        jogosDesenvolvidos = new ArrayList();
+        jogosDistribuidos = new ArrayList<Jogo>();
+        jogosDesenvolvidos = new ArrayList<Jogo>();
 
     }
 

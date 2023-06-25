@@ -6,13 +6,11 @@
  */
 package com.mycompany.jogos;
 
-import com.mycompany.jogos.entidades.Empresa;
 import com.mycompany.jogos.repositorio.ContaPrincipalDao;
 import com.mycompany.jogos.entidades.Conta;
 import com.mycompany.jogos.entidades.ContaPrincipal;
 import com.mycompany.jogos.entidades.Usuario;
 import com.mycompany.jogos.repositorio.ContaDao;
-import com.mycompany.jogos.repositorio.EmpresaDao;
 import com.mycompany.jogos.repositorio.UsuarioDao;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -325,7 +323,7 @@ public class IjfContaPrincipal extends javax.swing.JInternalFrame {
             contaPrincipal = new ContaPrincipal();
         }
         conta.setLogin(jtfLogin.getText());
-        conta.setSenha(jpfSenha.getText());
+        conta.setSenha(new String(jpfSenha.getPassword()));
         conta.setApelido(jtfApelido.getText());
         conta.setPerguntaDeSeguranca(jtfPerguntaDeSeguranca.getText());
         conta.setRespostaDeSeguranca(jtfRspostaDeSeguranca.getText());

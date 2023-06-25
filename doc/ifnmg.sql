@@ -205,6 +205,8 @@ VALUES ('WELLINGTON','PASCOAL', 'PASCOAL','NOME DO PAI','PASCOAL');
 INSERT INTO CONTA (login, senha, apelido,perguntaDeSeguranca, respostaDeSeguranca)
 VALUES ('WELLINGTON-SUB','PASCOAL', 'PASCOAL','NOME DO PAI','PASCOAL');
 
+SELECT * FROM CONTA;
+
 
 CREATE TABLE JogoConta(
 dataJogo DATE,
@@ -318,8 +320,8 @@ INSERT INTO ContaPrincipal (loginConta, cpfUsuario) VALUES ('WELLINGTON','845985
 
 CREATE TABLE SubConta(
 loginConta VARCHAR(15) NOT NULL,
-loginContaPrincipal VARCHAR(15),
-cpfUsuario VARCHAR(14),
+loginContaPrincipal VARCHAR(15) NOT NULL,
+cpfUsuario VARCHAR(14) NOT NULL,
 usoDoCartao INTEGER,
 acessoConteudoImproprio INTEGER,
 CONSTRAINT pkSubConta PRIMARY KEY (loginConta),
@@ -331,6 +333,7 @@ CONSTRAINT fkSubContaUsuarios foreign KEY (cpfUsuario)
 REFERENCES Usuarios (cpf)
 );
 
+SELECT * FROM SUBCONTA;
 INSERT INTO SubConta (loginConta, loginContaPrincipal, cpfUsuario, usoDoCartao, acessoConteudoImproprio) VALUES ('ANA-SUB','ANA','15648615270',1,1);
 INSERT INTO SubConta (loginConta, loginContaPrincipal, cpfUsuario, usoDoCartao, acessoConteudoImproprio) VALUES ('BEATRIZ-SUB','BEATRIZ','48275389610',1,1);
 INSERT INTO SubConta (loginConta, loginContaPrincipal, cpfUsuario, usoDoCartao, acessoConteudoImproprio) VALUES ('ANTONIO-SUB','ANTONIO','84578915310',1,1);
