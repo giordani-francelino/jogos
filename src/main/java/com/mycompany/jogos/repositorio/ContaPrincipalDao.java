@@ -41,7 +41,7 @@ public class ContaPrincipalDao extends Dao<ContaPrincipal> {
     public void composeSaveOrUpdateStatement(PreparedStatement pstmt, ContaPrincipal e) {
         try {
             pstmt.setString(1, e.getUsuario().getCpf());
-            pstmt.setString(2, e.getConta().getLogin());
+            pstmt.setString(2, e.getLoginConta());
 
         } catch (SQLException ex) {
             Logger.getLogger(ContaPrincipalDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -56,7 +56,7 @@ public class ContaPrincipalDao extends Dao<ContaPrincipal> {
     @Override
     public void composeDeleteByPkStatement(PreparedStatement pstmt, ContaPrincipal e) {
         try {
-            pstmt.setString(1, e.getConta().getLogin());
+            pstmt.setString(1, e.getLoginConta());
 
         } catch (SQLException ex) {
             Logger.getLogger(ContaPrincipalDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -73,7 +73,8 @@ public class ContaPrincipalDao extends Dao<ContaPrincipal> {
     @Override
     public void composeFindByPkStatement(PreparedStatement pstmt, ContaPrincipal e) {
         try {
-            pstmt.setString(1, e.getConta().getLogin());
+            pstmt.setString(1, e.getLoginConta());
+
 
         } catch (SQLException ex) {
             Logger.getLogger(ContaPrincipalDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -83,7 +84,7 @@ public class ContaPrincipalDao extends Dao<ContaPrincipal> {
 
     @Override
     public String getFindAllStatment() {
-        return "select  cpfUsuario, loginConta "
+        return "select cpfUsuario, loginConta "
                 + " from " + TABLE;
     }
 
@@ -95,6 +96,7 @@ public class ContaPrincipalDao extends Dao<ContaPrincipal> {
         try {
             contaPrincipal = new ContaPrincipal();
 
+            contaPrincipal.setLoginConta(resultSet.getString("loginConta"));
             ContaDao contaDao = new ContaDao();
             Conta conta = new Conta();
             conta.setLogin(resultSet.getString("loginConta"));

@@ -6,28 +6,60 @@
  */
 package com.mycompany.jogos;
 
+import com.mycompany.jogos.entidades.Empresa;
+import com.mycompany.jogos.entidades.Jogo;
+import com.mycompany.jogos.repositorio.EmpresaDao;
+import com.mycompany.jogos.repositorio.JogoDao;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Luis Guisso <luis dot guisso at ifnmg dot edu dot br>
  * @version 0.0.1, 16/08/2021
  */
 public class IjfJogo extends javax.swing.JInternalFrame {
-    
+
     private static IjfJogo self;
+    private Jogo jogo;
 
     /**
      * Creates new form InternaC
      */
     private IjfJogo() {
+        jogo = new Jogo();
         initComponents();
+
+        DefaultComboBoxModel<Empresa> comboBoxModelDesenvolvedora = new DefaultComboBoxModel<>();
+        try {
+            comboBoxModelDesenvolvedora.addAll(new EmpresaDao().findAll());
+        } catch (Exception ex) {
+            Logger.getLogger(IjfJogo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        jcbEmpresaDesenvolvedora.setModel(comboBoxModelDesenvolvedora);
+
+        DefaultComboBoxModel<Empresa> comboBoxModelDistribuidora = new DefaultComboBoxModel<>();
+        try {
+            comboBoxModelDistribuidora.addAll(new EmpresaDao().findAll());
+        } catch (Exception ex) {
+            Logger.getLogger(IjfJogo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        jcbEmpresaDistribuidora.setModel(comboBoxModelDistribuidora);
+
     }
-    
+
     public static IjfJogo getInstance() {
         // Caso a janela ainda não tenha sido instanciada
-        if(self == null) {
+        if (self == null) {
             self = new IjfJogo();
         }
-        
+
         return self;
     }
 
@@ -46,10 +78,26 @@ public class IjfJogo extends javax.swing.JInternalFrame {
         jbtRecuperar = new javax.swing.JButton();
         jbtExcluir = new javax.swing.JButton();
         jbtListar = new javax.swing.JButton();
+        jtfId = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jtfNome = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jtfSinopse = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        jtfClassificacaoEtaria = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        jtfEdicao = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        jcbEmpresaDesenvolvedora = new javax.swing.JComboBox<>();
+        jcbEmpresaDistribuidora = new javax.swing.JComboBox<>();
+        jftfDataDeLancamento = new javax.swing.JFormattedTextField();
 
         setClosable(true);
         setIconifiable(true);
-        setTitle("Cadastro C");
+        setTitle("Cadastro de Jogos");
 
         jbtInserir.setText("Inserir");
         jbtInserir.addActionListener(new java.awt.event.ActionListener() {
@@ -59,28 +107,89 @@ public class IjfJogo extends javax.swing.JInternalFrame {
         });
 
         jbtAtualizar.setText("Atualizar");
+        jbtAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtAtualizarActionPerformed(evt);
+            }
+        });
 
         jbtRecuperar.setText("Recuperar");
+        jbtRecuperar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtRecuperarActionPerformed(evt);
+            }
+        });
 
         jbtExcluir.setText("Excluir");
+        jbtExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtExcluirActionPerformed(evt);
+            }
+        });
 
         jbtListar.setText("Listar");
+        jbtListar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtListarActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("ID");
+
+        jLabel2.setText("NOME");
+
+        jLabel3.setText("EMPRESA DESENVOLVEDORA");
+
+        jLabel4.setText("EMPRESA DISTRIBUIDORA");
+
+        jLabel5.setText("SINOPSE");
+
+        jLabel6.setText("CLASSIFICAÇÃO ETÁRIA");
+
+        jLabel7.setText("EDIÇÃO");
+
+        jLabel8.setText("DATA DE LANÇAMENTO");
+
+        jftfDataDeLancamento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
 
         javax.swing.GroupLayout jpPrincipalLayout = new javax.swing.GroupLayout(jpPrincipal);
         jpPrincipal.setLayout(jpPrincipalLayout);
         jpPrincipalLayout.setHorizontalGroup(
             jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpPrincipalLayout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addComponent(jbtInserir, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpPrincipalLayout.createSequentialGroup()
+                .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(jpPrincipalLayout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addComponent(jbtInserir, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jbtAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jpPrincipalLayout.createSequentialGroup()
+                        .addGap(35, 35, 35)
+                        .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(18, 18, 18)
-                .addComponent(jbtAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jbtRecuperar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addComponent(jbtExcluir)
-                .addGap(18, 18, 18)
-                .addComponent(jbtListar, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpPrincipalLayout.createSequentialGroup()
+                        .addComponent(jbtRecuperar, javax.swing.GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jbtExcluir)
+                        .addGap(18, 18, 18)
+                        .addComponent(jbtListar, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jtfId)
+                    .addComponent(jtfNome)
+                    .addComponent(jtfSinopse)
+                    .addComponent(jtfClassificacaoEtaria)
+                    .addComponent(jtfEdicao)
+                    .addComponent(jcbEmpresaDesenvolvedora, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jcbEmpresaDistribuidora, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jftfDataDeLancamento))
                 .addContainerGap())
         );
 
@@ -89,7 +198,39 @@ public class IjfJogo extends javax.swing.JInternalFrame {
         jpPrincipalLayout.setVerticalGroup(
             jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpPrincipalLayout.createSequentialGroup()
-                .addContainerGap(261, Short.MAX_VALUE)
+                .addGap(14, 14, 14)
+                .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jtfId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addGap(14, 14, 14)
+                .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jtfNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addGap(14, 14, 14)
+                .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jcbEmpresaDesenvolvedora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(14, 14, 14)
+                .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jcbEmpresaDistribuidora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(14, 14, 14)
+                .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jtfSinopse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addGap(14, 14, 14)
+                .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jtfClassificacaoEtaria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
+                .addGap(14, 14, 14)
+                .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jtfEdicao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7))
+                .addGap(14, 14, 14)
+                .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(jftfDataDeLancamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
                 .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jbtRecuperar)
@@ -119,15 +260,152 @@ public class IjfJogo extends javax.swing.JInternalFrame {
 
     private void jbtInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtInserirActionPerformed
         // TODO add your handling code here:
+        getDadosTela();
+        try {
+            // TODO add your handling code here:
+            if (new JogoDao().findByPk(jogo) != null) {
+                JOptionPane.showMessageDialog(this, "já cadastraado");
+                return;
+            }
+            new JogoDao().saveOrUpdate(jogo, true);
+            limparDadosTela();
+            getDadosTela();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
     }//GEN-LAST:event_jbtInserirActionPerformed
+
+    private void jbtAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAtualizarActionPerformed
+        // TODO add your handling code here:
+        getDadosTela();
+        try {
+            // TODO add your handling code here:
+            if (new JogoDao().findByPk(jogo) == null) {
+                JOptionPane.showMessageDialog(this, "não cadastraado");
+                return;
+            }
+            new JogoDao().saveOrUpdate(jogo, false);
+            limparDadosTela();
+            getDadosTela();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
+
+    }//GEN-LAST:event_jbtAtualizarActionPerformed
+
+    private void jbtRecuperarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRecuperarActionPerformed
+        // TODO add your handling code here:
+        getDadosTela();
+        try {
+            // TODO add your handling code here:
+            if (new JogoDao().findByPk(jogo) == null) {
+                JOptionPane.showMessageDialog(this, "não cadastraado");
+                return;
+            }
+
+            jogo = new JogoDao().findByPk(jogo);
+            setDadosTela();
+//        JOptionPane.showMessageDialog(this, "sucesso");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
+
+    }//GEN-LAST:event_jbtRecuperarActionPerformed
+
+    private void jbtExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtExcluirActionPerformed
+        // TODO add your handling code here:
+        getDadosTela();
+        try {
+            // TODO add your handling code here:
+            if (new JogoDao().findByPk(jogo) == null) {
+                JOptionPane.showMessageDialog(this, "não cadastraado");
+                return;
+            }
+            new JogoDao().deleteByPk(jogo);
+            limparDadosTela();
+            getDadosTela();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
+    }//GEN-LAST:event_jbtExcluirActionPerformed
+
+    private void jbtListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtListarActionPerformed
+        // TODO add your handling code here:
+        new Util().relatorios("/Jogo.jasper", "Listagem de Jogos");
+    }//GEN-LAST:event_jbtListarActionPerformed
+
+    private void getDadosTela() {
+        if (jogo == null) {
+            jogo = new Jogo();
+        }
+        jogo.setId(jtfId.getText());
+        jogo.setNome(jtfNome.getText());
+        jogo.setEmpresaDesenvolvedora((Empresa) jcbEmpresaDesenvolvedora.getSelectedItem());
+        jogo.setEmpresaDistribuidora((Empresa) jcbEmpresaDistribuidora.getSelectedItem());
+        jogo.setSinopse(jtfSinopse.getText());
+        jogo.setClassificacaoEtaria(jtfClassificacaoEtaria.getText());
+        jogo.setEdicao(jtfEdicao.getText());
+        if (!jftfDataDeLancamento.getText().equals("")) {
+            DateTimeFormatter formatters = DateTimeFormatter.ofPattern("d/MM/uuuu");
+            jogo.setDataDeLancamento(LocalDate.parse(jftfDataDeLancamento.getText(), formatters));
+        } else {
+            jogo.setDataDeLancamento(null);
+        }
+    }
+
+    private void setDadosTela() {
+        if (jogo == null) {
+            jogo = new Jogo();
+        }
+        jtfId.setText(jogo.getId());
+        jtfNome.setText(jogo.getNome());
+        jcbEmpresaDesenvolvedora.getModel().setSelectedItem(jogo.getEmpresaDesenvolvedora());
+        jcbEmpresaDistribuidora.getModel().setSelectedItem(jogo.getEmpresaDistribuidora());
+        jtfSinopse.setText(jogo.getSinopse());
+        jtfClassificacaoEtaria.setText(jogo.getClassificacaoEtaria());
+        jtfEdicao.setText(jogo.getEdicao());
+        if (jogo.getDataDeLancamento() != null) {
+            Date date = Date.valueOf(jogo.getDataDeLancamento());
+            jftfDataDeLancamento.setText(new SimpleDateFormat("dd/MM/yyyy").format(date));
+        } else {
+            jftfDataDeLancamento.setText("");
+        }
+    }
+
+    private void limparDadosTela() {
+        jtfId.setText("");
+        jtfNome.setText("");
+        jcbEmpresaDesenvolvedora.setSelectedItem(null);
+        jcbEmpresaDistribuidora.setSelectedItem(null);
+        jtfSinopse.setText("");
+        jtfClassificacaoEtaria.setText("");
+        jtfEdicao.setText("");
+        jftfDataDeLancamento.setText("");
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JButton jbtAtualizar;
     private javax.swing.JButton jbtExcluir;
     private javax.swing.JButton jbtInserir;
     private javax.swing.JButton jbtListar;
     private javax.swing.JButton jbtRecuperar;
+    private javax.swing.JComboBox<Empresa> jcbEmpresaDesenvolvedora;
+    private javax.swing.JComboBox<Empresa> jcbEmpresaDistribuidora;
+    private javax.swing.JFormattedTextField jftfDataDeLancamento;
     private javax.swing.JPanel jpPrincipal;
+    private javax.swing.JTextField jtfClassificacaoEtaria;
+    private javax.swing.JTextField jtfEdicao;
+    private javax.swing.JTextField jtfId;
+    private javax.swing.JTextField jtfNome;
+    private javax.swing.JTextField jtfSinopse;
     // End of variables declaration//GEN-END:variables
 }

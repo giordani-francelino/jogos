@@ -59,12 +59,32 @@ public class InternaC extends javax.swing.JInternalFrame {
         });
 
         jbtAtualizar.setText("Atualizar");
+        jbtAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtAtualizarActionPerformed(evt);
+            }
+        });
 
         jbtRecuperar.setText("Recuperar");
+        jbtRecuperar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtRecuperarActionPerformed(evt);
+            }
+        });
 
         jbtExcluir.setText("Excluir");
+        jbtExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtExcluirActionPerformed(evt);
+            }
+        });
 
         jbtListar.setText("Listar");
+        jbtListar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtListarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jpPrincipalLayout = new javax.swing.GroupLayout(jpPrincipal);
         jpPrincipal.setLayout(jpPrincipalLayout);
@@ -120,6 +140,22 @@ public class InternaC extends javax.swing.JInternalFrame {
     private void jbtInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtInserirActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jbtInserirActionPerformed
+
+    private void jbtAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAtualizarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbtAtualizarActionPerformed
+
+    private void jbtRecuperarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRecuperarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbtRecuperarActionPerformed
+
+    private void jbtExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtExcluirActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbtExcluirActionPerformed
+
+    private void jbtListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtListarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbtListarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

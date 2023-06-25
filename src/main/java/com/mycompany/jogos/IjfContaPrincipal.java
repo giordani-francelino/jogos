@@ -6,28 +6,53 @@
  */
 package com.mycompany.jogos;
 
+import com.mycompany.jogos.entidades.Empresa;
+import com.mycompany.jogos.repositorio.ContaPrincipalDao;
+import com.mycompany.jogos.entidades.Conta;
+import com.mycompany.jogos.entidades.ContaPrincipal;
+import com.mycompany.jogos.entidades.Usuario;
+import com.mycompany.jogos.repositorio.ContaDao;
+import com.mycompany.jogos.repositorio.EmpresaDao;
+import com.mycompany.jogos.repositorio.UsuarioDao;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Luis Guisso <luis dot guisso at ifnmg dot edu dot br>
  * @version 0.0.1, 16/08/2021
  */
 public class IjfContaPrincipal extends javax.swing.JInternalFrame {
-    
+
     private static IjfContaPrincipal self;
+    private Conta conta;
+    private ContaPrincipal contaPrincipal;
 
     /**
      * Creates new form InternaC
      */
     private IjfContaPrincipal() {
+        conta = new Conta();
+        contaPrincipal = new ContaPrincipal();
         initComponents();
+        DefaultComboBoxModel<Usuario> comboBoxModelUsuario = new DefaultComboBoxModel<>();
+        try {
+            comboBoxModelUsuario.addAll(new UsuarioDao().findAll());
+        } catch (Exception ex) {
+            Logger.getLogger(IjfJogo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        jcbUsuario.setModel(comboBoxModelUsuario);
+
     }
-    
+
     public static IjfContaPrincipal getInstance() {
         // Caso a janela ainda não tenha sido instanciada
-        if(self == null) {
+        if (self == null) {
             self = new IjfContaPrincipal();
         }
-        
+
         return self;
     }
 
@@ -46,10 +71,22 @@ public class IjfContaPrincipal extends javax.swing.JInternalFrame {
         jbtRecuperar = new javax.swing.JButton();
         jbtExcluir = new javax.swing.JButton();
         jbtListar = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jtfLogin = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jtfApelido = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jtfPerguntaDeSeguranca = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jtfRspostaDeSeguranca = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        jcbUsuario = new javax.swing.JComboBox<>();
+        jpfSenha = new javax.swing.JPasswordField();
 
         setClosable(true);
         setIconifiable(true);
-        setTitle("Cadastro C");
+        setTitle("Cadastro de contas principais");
 
         jbtInserir.setText("Inserir");
         jbtInserir.addActionListener(new java.awt.event.ActionListener() {
@@ -59,28 +96,85 @@ public class IjfContaPrincipal extends javax.swing.JInternalFrame {
         });
 
         jbtAtualizar.setText("Atualizar");
+        jbtAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtAtualizarActionPerformed(evt);
+            }
+        });
 
         jbtRecuperar.setText("Recuperar");
+        jbtRecuperar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtRecuperarActionPerformed(evt);
+            }
+        });
 
         jbtExcluir.setText("Excluir");
+        jbtExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtExcluirActionPerformed(evt);
+            }
+        });
 
         jbtListar.setText("Listar");
+        jbtListar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtListarActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("LOGIN");
+
+        jLabel2.setText("SENHA");
+
+        jLabel3.setText("APELIDO");
+
+        jLabel4.setText("PERGUNTA DE SEGURANÇA");
+
+        jLabel5.setText("RESPOSTA DE SEGURANÇA");
+
+        jLabel6.setText("USUÁRIO");
+
+        jpfSenha.setText("jPasswordField1");
 
         javax.swing.GroupLayout jpPrincipalLayout = new javax.swing.GroupLayout(jpPrincipal);
         jpPrincipal.setLayout(jpPrincipalLayout);
         jpPrincipalLayout.setHorizontalGroup(
-            jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(jpPrincipalLayout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addComponent(jbtInserir, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jbtAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jbtRecuperar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addComponent(jbtExcluir)
-                .addGap(18, 18, 18)
-                .addComponent(jbtListar, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpPrincipalLayout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addComponent(jbtInserir, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jbtAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jbtRecuperar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jbtExcluir)
+                        .addGap(18, 18, 18)
+                        .addComponent(jbtListar, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpPrincipalLayout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jpPrincipalLayout.createSequentialGroup()
+                                .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(12, 12, 12))
+                            .addGroup(jpPrincipalLayout.createSequentialGroup()
+                                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(102, 102, 102)))
+                        .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jcbUsuario, 0, 275, Short.MAX_VALUE)
+                            .addComponent(jtfRspostaDeSeguranca, javax.swing.GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE)
+                            .addComponent(jtfPerguntaDeSeguranca, javax.swing.GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE)
+                            .addComponent(jtfApelido, javax.swing.GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE)
+                            .addComponent(jtfLogin, javax.swing.GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE)
+                            .addComponent(jpfSenha))))
                 .addContainerGap())
         );
 
@@ -89,7 +183,31 @@ public class IjfContaPrincipal extends javax.swing.JInternalFrame {
         jpPrincipalLayout.setVerticalGroup(
             jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpPrincipalLayout.createSequentialGroup()
-                .addContainerGap(261, Short.MAX_VALUE)
+                .addGap(16, 16, 16)
+                .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jtfLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addGap(16, 16, 16)
+                .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jpfSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(16, 16, 16)
+                .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jtfApelido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addGap(16, 16, 16)
+                .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jtfPerguntaDeSeguranca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addGap(16, 16, 16)
+                .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jtfRspostaDeSeguranca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addGap(16, 16, 16)
+                .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(jcbUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                 .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jbtRecuperar)
@@ -107,7 +225,7 @@ public class IjfContaPrincipal extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jpPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(274, 274, 274))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -119,15 +237,143 @@ public class IjfContaPrincipal extends javax.swing.JInternalFrame {
 
     private void jbtInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtInserirActionPerformed
         // TODO add your handling code here:
+        getDadosTela();
+        try {
+            // TODO add your handling code here:
+            if (new ContaPrincipalDao().findByPk(contaPrincipal) != null) {
+                JOptionPane.showMessageDialog(this, "já cadastraado");
+                return;
+            }
+            new ContaDao().saveOrUpdate(conta, true);
+            new ContaPrincipalDao().saveOrUpdate(contaPrincipal, true);
+            contaPrincipal.setConta(conta);
+            limparDadosTela();
+            getDadosTela();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
     }//GEN-LAST:event_jbtInserirActionPerformed
 
+    private void jbtAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAtualizarActionPerformed
+        // TODO add your handling code here:
+        getDadosTela();
+        try {
+            // TODO add your handling code here:
+            if (new ContaPrincipalDao().findByPk(contaPrincipal) == null) {
+                JOptionPane.showMessageDialog(this, "não cadastraado");
+                return;
+            }
+            new ContaDao().saveOrUpdate(conta, false);
+//            new ContaPrincipalDao().saveOrUpdate(contaPrincipal, false);
+            limparDadosTela();
+            getDadosTela();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
+
+    }//GEN-LAST:event_jbtAtualizarActionPerformed
+
+    private void jbtRecuperarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRecuperarActionPerformed
+        // TODO add your handling code here:
+        getDadosTela();
+        try {
+            // TODO add your handling code here:
+            if (new ContaPrincipalDao().findByPk(contaPrincipal) == null) {
+                JOptionPane.showMessageDialog(this, "não cadastraado");
+                return;
+            }
+            conta = new ContaDao().findByPk(conta);
+            contaPrincipal = new ContaPrincipalDao().findByPk(contaPrincipal);
+            contaPrincipal.setConta(conta);
+            setDadosTela();
+//        JOptionPane.showMessageDialog(this, "sucesso");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
+    }//GEN-LAST:event_jbtRecuperarActionPerformed
+
+    private void jbtExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtExcluirActionPerformed
+        // TODO add your handling code here:
+        getDadosTela();
+        try {
+            // TODO add your handling code here:
+            if (new ContaPrincipalDao().findByPk(contaPrincipal) == null) {
+                JOptionPane.showMessageDialog(this, "não cadastraado");
+                return;
+            }
+            new ContaPrincipalDao().deleteByPk(contaPrincipal);
+            new ContaDao().deleteByPk(conta);
+            limparDadosTela();
+            getDadosTela();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
+    }//GEN-LAST:event_jbtExcluirActionPerformed
+
+    private void jbtListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtListarActionPerformed
+        // TODO add your handling code here:
+        new Util().relatorios("/ContaPrincipal.jasper", "Listagem de ContaPrincipals");
+    }//GEN-LAST:event_jbtListarActionPerformed
+
+//    private String login;
+//    private String senha;
+//    private String apelido;
+//    private String perguntaDeSeguranca;
+//    private String respostaDeSeguranca;
+    private void getDadosTela() {
+        if (contaPrincipal == null) {
+            contaPrincipal = new ContaPrincipal();
+        }
+        conta.setLogin(jtfLogin.getText());
+        conta.setSenha(jpfSenha.getText());
+        conta.setApelido(jtfApelido.getText());
+        conta.setPerguntaDeSeguranca(jtfPerguntaDeSeguranca.getText());
+        conta.setRespostaDeSeguranca(jtfRspostaDeSeguranca.getText());
+        contaPrincipal.setLoginConta(jtfLogin.getText());
+        contaPrincipal.setConta(conta);
+        contaPrincipal.setUsuario((Usuario) jcbUsuario.getSelectedItem());
+    }
+
+    private void setDadosTela() {
+        if (contaPrincipal == null) {
+            contaPrincipal = new ContaPrincipal();
+        }
+        jtfLogin.setText(conta.getLogin());
+        jpfSenha.setText(conta.getSenha());
+        jtfApelido.setText(conta.getApelido());
+        jtfPerguntaDeSeguranca.setText(conta.getPerguntaDeSeguranca());
+        jtfRspostaDeSeguranca.setText(conta.getRespostaDeSeguranca());
+        jcbUsuario.getModel().setSelectedItem(contaPrincipal.getUsuario());
+
+    }
+
+    private void limparDadosTela() {
+        jtfLogin.setText("");
+        jpfSenha.setText("");
+        jtfApelido.setText("");
+        jtfPerguntaDeSeguranca.setText("");
+        jtfRspostaDeSeguranca.setText("");
+        jcbUsuario.getModel().setSelectedItem(null);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JButton jbtAtualizar;
     private javax.swing.JButton jbtExcluir;
     private javax.swing.JButton jbtInserir;
     private javax.swing.JButton jbtListar;
     private javax.swing.JButton jbtRecuperar;
+    private javax.swing.JComboBox<Usuario> jcbUsuario;
     private javax.swing.JPanel jpPrincipal;
+    private javax.swing.JPasswordField jpfSenha;
+    private javax.swing.JTextField jtfApelido;
+    private javax.swing.JTextField jtfLogin;
+    private javax.swing.JTextField jtfPerguntaDeSeguranca;
+    private javax.swing.JTextField jtfRspostaDeSeguranca;
     // End of variables declaration//GEN-END:variables
 }

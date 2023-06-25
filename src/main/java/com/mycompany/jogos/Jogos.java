@@ -5,6 +5,7 @@ package com.mycompany.jogos;
 
 import com.mycompany.jogos.entidades.Empresa;
 import com.mycompany.jogos.entidades.Jogo;
+import com.mycompany.jogos.repositorio.DbConnection;
 import com.mycompany.jogos.repositorio.EmpresaDao;
 import com.mycompany.jogos.repositorio.JogoDao;
 import java.sql.Connection;
@@ -15,8 +16,8 @@ import java.util.List;
 import java.util.Properties;
 
 /**
- *            <systemPath>"C:/dev/bd/jogos/jasperreports-6.20.5.jar"</systemPath>
-
+ * <systemPath>"C:/dev/bd/jogos/jasperreports-6.20.5.jar"</systemPath>
+ *
  * @author Your Name &lt;francelino at ifnmg&gt;
  */
 public class Jogos {
@@ -57,8 +58,6 @@ public class Jogos {
 //            }
 //        }
 
-
-
 //        Jogo jogo1 = new Jogo();
 //        jogo1.setId("123");
 //        jogo1.setNome("jogo1");
@@ -96,7 +95,8 @@ public class Jogos {
 //        System.out.println(empresas);
 //        List<Jogo> jogos = jogoDao.findAll();
 //        System.out.println(jogos);
-        Principal janelaPrincipal =  new Principal();
+        Connection connection = DbConnection.getConnection();
+        Principal janelaPrincipal = new Principal();
         janelaPrincipal.setVisible(true);
     }
 }

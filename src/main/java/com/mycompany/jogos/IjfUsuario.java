@@ -231,7 +231,7 @@ public class IjfUsuario extends javax.swing.JInternalFrame {
         try {
             // TODO add your handling code here:
             if (new UsuarioDao().findByPk(usuario) != null) {
-                JOptionPane.showMessageDialog(this, "já não cadastraado");
+                JOptionPane.showMessageDialog(this, "já cadastraado");
                 return;
             }
             new UsuarioDao().saveOrUpdate(usuario, true);

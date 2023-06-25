@@ -112,7 +112,7 @@ public class Usuario {
 
     @Override
     public String toString() {
-        return "Usuario{" + "cpf=" + cpf + ", nome=" + nome + ", pa\u00eds=" + país + ", email=" + email + ", dataNascimento=" + dataNascimento + '}';
+        return nome;
     }
     
     

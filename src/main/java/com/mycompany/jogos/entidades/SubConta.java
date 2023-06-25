@@ -17,6 +17,7 @@ package com.mycompany.jogos.entidades;
  */
 public class SubConta {
 
+    private String loginConta;
     private Conta conta;
     private Usuario usuario;
     private ContaPrincipal contaPrincipal;
@@ -37,6 +38,16 @@ public class SubConta {
     }
 
     //<editor-fold defaultstate="collapsed" desc="getters and setters">
+
+    public String getLoginConta() {
+        return loginConta;
+    }
+
+    public void setLoginConta(String loginConta) {
+        this.loginConta = loginConta;
+    }
+    
+    
     
     public Conta getConta() {
         return conta;

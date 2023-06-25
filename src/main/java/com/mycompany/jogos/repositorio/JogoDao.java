@@ -83,7 +83,7 @@ public class JogoDao extends Dao<Jogo> {
     @Override
     public String getFindByPkStatment() {
         return "select nome, nomeDesenvolvedor, nomeDistribuidor, "
-                + "sinopse, classificacaoEtaria, edicao, dataDeLancamento "
+                + "sinopse, classificacaoEtaria, edicao, dataDeLancamento, id "
                 + " from " + TABLE + " where id = ?";
     }
 

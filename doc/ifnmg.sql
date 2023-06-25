@@ -21,6 +21,8 @@ drop TABLE GeneroDoJogo;
 drop table Jogos;
 drop table empresa;
 
+select * from empresa;
+
 CREATE TABLE Empresa(
 nome VARCHAR(80) NOT NULL,
 website VARCHAR(80),

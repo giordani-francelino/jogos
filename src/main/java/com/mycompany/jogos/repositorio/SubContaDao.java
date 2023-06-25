@@ -54,11 +54,24 @@ public class SubContaDao extends Dao<SubConta> {
     @Override
     public void composeSaveOrUpdateStatement(PreparedStatement pstmt, SubConta e) {
         try {
-            pstmt.setString(1, e.getContaPrincipal().getConta().getLogin());
-            pstmt.setString(2, e.getUsuario().getCpf());
+
+            SubConta atualizar = new SubConta();
+            atualizar.setLoginConta(e.getLoginConta());
+            try {
+                atualizar = new SubContaDao().findByPk(e);
+            } catch (Exception ex) {
+                Logger.getLogger(SubContaDao.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            if (atualizar == null) {
+                pstmt.setString(1, e.getContaPrincipal().getLoginConta());
+                pstmt.setString(2, e.getUsuario().getCpf());
+            } else {
+                pstmt.setString(1, atualizar.getContaPrincipal().getLoginConta());
+                pstmt.setString(2, atualizar.getUsuario().getCpf());
+            }
             pstmt.setInt(3, e.getUsoDoCartao());
             pstmt.setInt(4, e.getAcessoConteudoImproprio());
-            pstmt.setString(5, e.getConta().getLogin());
+            pstmt.setString(5, e.getLoginConta());
 
         } catch (SQLException ex) {
             Logger.getLogger(SubContaDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -73,7 +86,7 @@ public class SubContaDao extends Dao<SubConta> {
     @Override
     public void composeDeleteByPkStatement(PreparedStatement pstmt, SubConta e) {
         try {
-            pstmt.setString(1, e.getConta().getLogin());
+            pstmt.setString(1, e.getLoginConta());
 
         } catch (SQLException ex) {
             Logger.getLogger(SubContaDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -91,7 +104,7 @@ public class SubContaDao extends Dao<SubConta> {
     @Override
     public void composeFindByPkStatement(PreparedStatement pstmt, SubConta e) {
         try {
-            pstmt.setString(1, e.getConta().getLogin());
+            pstmt.setString(1, e.getLoginConta());
 
         } catch (SQLException ex) {
             Logger.getLogger(SubContaDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -115,6 +128,8 @@ public class SubContaDao extends Dao<SubConta> {
         try {
             subConta = new SubConta();
 
+            subConta.setLoginConta(resultSet.getString("loginConta"));
+
             ContaDao contaDao = new ContaDao();
             Conta conta = new Conta();
             conta.setLogin(resultSet.getString("loginConta"));
@@ -122,7 +137,7 @@ public class SubContaDao extends Dao<SubConta> {
 
             ContaPrincipalDao contaPrincipalDao = new ContaPrincipalDao();
             ContaPrincipal contaPrincipal = new ContaPrincipal();
-            conta.setLogin(resultSet.getString("loginContaPrincipal"));
+            contaPrincipal.setLoginConta(resultSet.getString("loginContaPrincipal"));
             subConta.setContaPrincipal(contaPrincipalDao.findByPk(contaPrincipal));
 
             UsuarioDao usuarioDao = new UsuarioDao();

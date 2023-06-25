@@ -267,7 +267,7 @@ public class IjfEmpresa extends javax.swing.JInternalFrame {
         try {
             // TODO add your handling code here:
             if (new EmpresaDao().findByPk(empresa) != null) {
-                JOptionPane.showMessageDialog(this, "já não cadastraado");
+                JOptionPane.showMessageDialog(this, "já cadastraado");
                 return;
             }
             new EmpresaDao().saveOrUpdate(empresa, true);

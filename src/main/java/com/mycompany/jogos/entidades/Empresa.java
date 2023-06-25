@@ -151,7 +151,7 @@ public class Empresa {
 //</editor-fold>
     @Override
     public String toString() {
-        return "Empresa{" + "nome=" + nome + ", website=" + website + ", nomeDoPresidente=" + nomeDoPresidente + ", dataDaFundacao=" + dataDaFundacao + ", cidade=" + cidade + ", estado=" + estado + ", pais=" + pais + ", nomeDoFundador=" + nomeDoFundador + '}';
+        return nome;
     }
 
 }
