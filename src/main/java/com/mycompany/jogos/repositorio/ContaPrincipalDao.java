@@ -29,7 +29,7 @@ public class ContaPrincipalDao extends Dao<ContaPrincipal> {
 
     @Override
     public String getSaveStatment() {
-        return "insert into " + TABLE + "(cpfUsuario, loginConta)  values (?, ?)";
+        return "insert into " + TABLE + "(loginConta)  values (?)";
     }
 
     @Override
@@ -40,8 +40,8 @@ public class ContaPrincipalDao extends Dao<ContaPrincipal> {
     @Override
     public void composeSaveOrUpdateStatement(PreparedStatement pstmt, ContaPrincipal e) {
         try {
-            pstmt.setString(1, e.getUsuario().getCpf());
-            pstmt.setString(2, e.getLoginConta());
+//            pstmt.setString(1, e.getUsuario().getCpf());
+            pstmt.setString(1, e.getLoginConta());
 
         } catch (SQLException ex) {
             Logger.getLogger(ContaPrincipalDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -66,7 +66,7 @@ public class ContaPrincipalDao extends Dao<ContaPrincipal> {
 
     @Override
     public String getFindByPkStatment() {
-        return "select cpfUsuario, loginConta "
+        return "select loginConta, cpfUsuario "
                 + " from " + TABLE + " where loginConta = ?";
     }
 
@@ -84,8 +84,8 @@ public class ContaPrincipalDao extends Dao<ContaPrincipal> {
 
     @Override
     public String getFindAllStatment() {
-        return "select cpfUsuario, loginConta "
-                + " from " + TABLE;
+        return "select loginConta, cpfUsuario "
+                + " from " + TABLE + " order by loginConta";
     }
 
     @Override
@@ -101,11 +101,6 @@ public class ContaPrincipalDao extends Dao<ContaPrincipal> {
             Conta conta = new Conta();
             conta.setLogin(resultSet.getString("loginConta"));
             contaPrincipal.setConta(contaDao.findByPk(conta));
-
-            UsuarioDao usuarioDao = new UsuarioDao();
-            Usuario usuario = new Usuario();
-            usuario.setCpf(resultSet.getString("cpfUsuario"));
-            contaPrincipal.setUsuario(usuarioDao.findByPk(usuario));
 
         } catch (SQLException ex) {
             Logger.getLogger(ContaPrincipalDao.class.getName()).log(Level.SEVERE, null, ex);

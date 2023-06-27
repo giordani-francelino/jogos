@@ -5,13 +5,13 @@ drop TABLE TrofeusRecebidos;
 drop TABLE CartaoDeCredito;
 drop TABLE SubConta;
 drop TABLE ContaPrincipal;
-drop TABLE Usuarios;
 drop TABLE consoleJogosComprados;
 drop TABLE ConsoleDaConta;
 drop TABLE ItensAdiquiridos;
 drop TABLE JogoComprado;
 drop TABLE JogoConta;
 drop TABLE Conta;
+drop TABLE Usuarios;
 drop TABLE Console;
 drop TABLE ItensAdicionais;
 drop TABLE Trofeu;
@@ -99,16 +99,17 @@ VALUES ('10','SEGUNDA GUERRA MUNDIAL','LIMEIRA JOGOS','SEUS JOGOS','SEGUNDA GUER
 CREATE TABLE GeneroDoJogo(
 genero VARCHAR(80),
 idJogo VARCHAR(15),
-CONSTRAINT pkGeneroDoJogo PRIMARY KEY (genero),
+CONSTRAINT pkGeneroDoJogo PRIMARY KEY (genero,idJogo),
 CONSTRAINT fkGeneroDoJogoJogos foreign KEY (idJogo)
 REFERENCES Jogos (id)
 );
-
+select * from generodojogo;
+insert into GeneroDoJogo(genero, idJogo) values ('Esporte', '1');
 
 CREATE TABLE LinguagensDoJogo(
 Linguagens VARCHAR(80),
 idJogo VARCHAR(15),
-CONSTRAINT pkLinguagensDoJogo PRIMARY KEY (Linguagens),
+CONSTRAINT pkLinguagensDoJogo PRIMARY KEY (Linguagens,idJogo),
 CONSTRAINT fkLinguagensDoJogoJogos foreign KEY (idJogo)
 REFERENCES Jogos (id)
 );
@@ -117,7 +118,7 @@ REFERENCES Jogos (id)
 CREATE TABLE IdiomasLegendas(
 IdiomasLegenda VARCHAR(80),
 idJogo VARCHAR(15),
-CONSTRAINT pkIdiomasLegendas PRIMARY KEY (IdiomasLegenda),
+CONSTRAINT pkIdiomasLegendas PRIMARY KEY (IdiomasLegenda,idJogo),
 CONSTRAINT fkIdiomasLegendasJogos foreign KEY (idJogo)
 REFERENCES Jogos (id)
 );
@@ -214,52 +215,55 @@ CREATE TABLE Conta(
 login VARCHAR(15) NOT NULL,
 senha VARCHAR(10),
 apelido VARCHAR(15),
+cpfUsuario VARCHAR(14),
 perguntaDeSeguranca VARCHAR(150),
 respostaDeSeguranca VARCHAR(150),
-CONSTRAINT pkConta PRIMARY KEY (login)
+CONSTRAINT pkConta PRIMARY KEY (login),
+CONSTRAINT fkContaUsuarios foreign KEY (cpfUsuario)
+REFERENCES Usuarios (cpf)
 );
 
 
-INSERT INTO CONTA (login, senha, apelido,perguntaDeSeguranca, respostaDeSeguranca)
-VALUES ('ANA','CAROLINA', 'ANA','NOME DO PAI','ANTONIO');
-INSERT INTO CONTA (login, senha, apelido,perguntaDeSeguranca, respostaDeSeguranca)
-VALUES ('ANA-SUB','CAROLINA', 'ANA','NOME DO PAI','ANTONIO');
-INSERT INTO CONTA (login, senha, apelido,perguntaDeSeguranca, respostaDeSeguranca)
-VALUES ('BEATRIZ','EUFRASIL', 'BEATRIZ','NOME DO PAI','JOSE');
-INSERT INTO CONTA (login, senha, apelido,perguntaDeSeguranca, respostaDeSeguranca)
-VALUES ('BEATRIZ-SUB','EUFRASIL', 'BEATRIZ','NOME DO PAI','JOSE');
-INSERT INTO CONTA (login, senha, apelido,perguntaDeSeguranca, respostaDeSeguranca)
-VALUES ('ANTONIO','JOAO', 'JOAO','NOME DO PAI','JOAO');
-INSERT INTO CONTA (login, senha, apelido,perguntaDeSeguranca, respostaDeSeguranca)
-VALUES ('ANTONIO-SUB','JOAO', 'JOAO','NOME DO PAI','JOAO');
-INSERT INTO CONTA (login, senha, apelido,perguntaDeSeguranca, respostaDeSeguranca)
-VALUES ('JOSE','FILHO', 'FILHO','NOME DO PAI','FILHO');
-INSERT INTO CONTA (login, senha, apelido,perguntaDeSeguranca, respostaDeSeguranca)
-VALUES ('JOSE-SUB','FILHO', 'FILHO','NOME DO PAI','FILHO');
-INSERT INTO CONTA (login, senha, apelido,perguntaDeSeguranca, respostaDeSeguranca)
-VALUES ('DANIEL','SILVA', 'SILVA','NOME DO PAI','SILVA');
-INSERT INTO CONTA (login, senha, apelido,perguntaDeSeguranca, respostaDeSeguranca)
-VALUES ('DANIEL-SUB','SILVA', 'SILVA','NOME DO PAI','SILVA');
-INSERT INTO CONTA (login, senha, apelido,perguntaDeSeguranca, respostaDeSeguranca)
-VALUES ('SHEILA','CARVALHO', 'CARVALHO','NOME DO PAI','CARVALHO');
-INSERT INTO CONTA (login, senha, apelido,perguntaDeSeguranca, respostaDeSeguranca)
-VALUES ('SHEILA-SUB','CARVALHO', 'CARVALHO','NOME DO PAI','CARVALHO');
-INSERT INTO CONTA (login, senha, apelido,perguntaDeSeguranca, respostaDeSeguranca)
-VALUES ('VICENTE','RAPOSO', 'RAPOSO','NOME DO PAI','RAPOSO');
-INSERT INTO CONTA (login, senha, apelido,perguntaDeSeguranca, respostaDeSeguranca)
-VALUES ('VICENTE-SUB','RAPOSO', 'RAPOSO','NOME DO PAI','RAPOSO');
-INSERT INTO CONTA (login, senha, apelido,perguntaDeSeguranca, respostaDeSeguranca)
-VALUES ('LUIZ','CARLOS', 'CARLOS','NOME DO PAI','CARLOS');
-INSERT INTO CONTA (login, senha, apelido,perguntaDeSeguranca, respostaDeSeguranca)
-VALUES ('LUIZ-SUB','CARLOS', 'CARLOS','NOME DO PAI','CARLOS');
-INSERT INTO CONTA (login, senha, apelido,perguntaDeSeguranca, respostaDeSeguranca)
-VALUES ('CARLOS','JOSE', 'JOSE','NOME DO PAI','JOSE');
-INSERT INTO CONTA (login, senha, apelido,perguntaDeSeguranca, respostaDeSeguranca)
-VALUES ('CARLOS-SUB','JOSE', 'JOSE','NOME DO PAI','JOSE');
-INSERT INTO CONTA (login, senha, apelido,perguntaDeSeguranca, respostaDeSeguranca)
-VALUES ('WELLINGTON','PASCOAL', 'PASCOAL','NOME DO PAI','PASCOAL');
-INSERT INTO CONTA (login, senha, apelido,perguntaDeSeguranca, respostaDeSeguranca)
-VALUES ('WELLINGTON-SUB','PASCOAL', 'PASCOAL','NOME DO PAI','PASCOAL');
+INSERT INTO CONTA (login, senha, apelido,perguntaDeSeguranca, respostaDeSeguranca, cpfUsuario)
+VALUES ('ANA','CAROLINA', 'ANA','NOME DO PAI','ANTONIO','15648615270');
+INSERT INTO CONTA (login, senha, apelido,perguntaDeSeguranca, respostaDeSeguranca, cpfUsuario)
+VALUES ('ANA-SUB','CAROLINA', 'ANA','NOME DO PAI','ANTONIO','15648615270');
+INSERT INTO CONTA (login, senha, apelido,perguntaDeSeguranca, respostaDeSeguranca, cpfUsuario)
+VALUES ('BEATRIZ','EUFRASIL', 'BEATRIZ','NOME DO PAI','JOSE','48275389610');
+INSERT INTO CONTA (login, senha, apelido,perguntaDeSeguranca, respostaDeSeguranca, cpfUsuario)
+VALUES ('BEATRIZ-SUB','EUFRASIL', 'BEATRIZ','NOME DO PAI','JOSE','48275389610');
+INSERT INTO CONTA (login, senha, apelido,perguntaDeSeguranca, respostaDeSeguranca, cpfUsuario)
+VALUES ('ANTONIO','JOAO', 'JOAO','NOME DO PAI','JOAO','84578915310');
+INSERT INTO CONTA (login, senha, apelido,perguntaDeSeguranca, respostaDeSeguranca, cpfUsuario)
+VALUES ('ANTONIO-SUB','JOAO', 'JOAO','NOME DO PAI','JOAO','84578915310');
+INSERT INTO CONTA (login, senha, apelido,perguntaDeSeguranca, respostaDeSeguranca, cpfUsuario)
+VALUES ('JOSE','FILHO', 'FILHO','NOME DO PAI','FILHO','48521325611');
+INSERT INTO CONTA (login, senha, apelido,perguntaDeSeguranca, respostaDeSeguranca, cpfUsuario)
+VALUES ('JOSE-SUB','FILHO', 'FILHO','NOME DO PAI','FILHO','48521325611');
+INSERT INTO CONTA (login, senha, apelido,perguntaDeSeguranca, respostaDeSeguranca, cpfUsuario)
+VALUES ('DANIEL','SILVA', 'SILVA','NOME DO PAI','SILVA','85675489652');
+INSERT INTO CONTA (login, senha, apelido,perguntaDeSeguranca, respostaDeSeguranca, cpfUsuario)
+VALUES ('DANIEL-SUB','SILVA', 'SILVA','NOME DO PAI','SILVA','85675489652');
+INSERT INTO CONTA (login, senha, apelido,perguntaDeSeguranca, respostaDeSeguranca, cpfUsuario)
+VALUES ('SHEILA','CARVALHO', 'CARVALHO','NOME DO PAI','CARVALHO','84578652312');
+INSERT INTO CONTA (login, senha, apelido,perguntaDeSeguranca, respostaDeSeguranca, cpfUsuario)
+VALUES ('SHEILA-SUB','CARVALHO', 'CARVALHO','NOME DO PAI','CARVALHO','84578652312');
+INSERT INTO CONTA (login, senha, apelido,perguntaDeSeguranca, respostaDeSeguranca, cpfUsuario)
+VALUES ('VICENTE','RAPOSO', 'RAPOSO','NOME DO PAI','RAPOSO','85478628910');
+INSERT INTO CONTA (login, senha, apelido,perguntaDeSeguranca, respostaDeSeguranca, cpfUsuario)
+VALUES ('VICENTE-SUB','RAPOSO', 'RAPOSO','NOME DO PAI','RAPOSO','85478628910');
+INSERT INTO CONTA (login, senha, apelido,perguntaDeSeguranca, respostaDeSeguranca, cpfUsuario)
+VALUES ('LUIZ','CARLOS', 'CARLOS','NOME DO PAI','CARLOS','02894652723');
+INSERT INTO CONTA (login, senha, apelido,perguntaDeSeguranca, respostaDeSeguranca, cpfUsuario)
+VALUES ('LUIZ-SUB','CARLOS', 'CARLOS','NOME DO PAI','CARLOS','02894652723');
+INSERT INTO CONTA (login, senha, apelido,perguntaDeSeguranca, respostaDeSeguranca, cpfUsuario)
+VALUES ('CARLOS','JOSE', 'JOSE','NOME DO PAI','JOSE','87546982359');
+INSERT INTO CONTA (login, senha, apelido,perguntaDeSeguranca, respostaDeSeguranca, cpfUsuario)
+VALUES ('CARLOS-SUB','JOSE', 'JOSE','NOME DO PAI','JOSE','87546982359');
+INSERT INTO CONTA (login, senha, apelido,perguntaDeSeguranca, respostaDeSeguranca, cpfUsuario)
+VALUES ('WELLINGTON','PASCOAL', 'PASCOAL','NOME DO PAI','PASCOAL','84598523659');
+INSERT INTO CONTA (login, senha, apelido,perguntaDeSeguranca, respostaDeSeguranca, cpfUsuario)
+VALUES ('WELLINGTON-SUB','PASCOAL', 'PASCOAL','NOME DO PAI','PASCOAL','84598523659');
 
 SELECT * FROM CONTA;
 
@@ -383,48 +387,47 @@ loginConta VARCHAR(15) NOT NULL,
 cpfUsuario VARCHAR(14),
 CONSTRAINT pkContaPrincipal PRIMARY KEY (loginConta),
 CONSTRAINT fkContaPrincipalConta foreign KEY (loginConta)
-REFERENCES Conta (login),
-CONSTRAINT fkContaPrincipalUsuarios foreign KEY (cpfUsuario)
-REFERENCES Usuarios (cpf)
+REFERENCES Conta (login)
 );
+SELECT * FROM CONTA;
+SELECT * from contaprincipal ;
+select LOGINCONTA from contaprincipal WHERE LOGINCONTA = 'ANA';
+INSERT INTO ContaPrincipal (loginConta) VALUES ('ANA');
+INSERT INTO ContaPrincipal (loginConta) VALUES ('BEATRIZ');
+INSERT INTO ContaPrincipal (loginConta) VALUES ('ANTONIO');
+INSERT INTO ContaPrincipal (loginConta) VALUES ('JOSE');
+INSERT INTO ContaPrincipal (loginConta) VALUES ('DANIEL');
+INSERT INTO ContaPrincipal (loginConta) VALUES ('SHEILA');
+INSERT INTO ContaPrincipal (loginConta) VALUES ('VICENTE');
+INSERT INTO ContaPrincipal (loginConta) VALUES ('LUIZ');
+INSERT INTO ContaPrincipal (loginConta) VALUES ('CARLOS');
+INSERT INTO ContaPrincipal (loginConta) VALUES ('WELLINGTON');
 
-INSERT INTO ContaPrincipal (loginConta, cpfUsuario) VALUES ('ANA','15648615270');
-INSERT INTO ContaPrincipal (loginConta, cpfUsuario) VALUES ('BEATRIZ','48275389610');
-INSERT INTO ContaPrincipal (loginConta, cpfUsuario) VALUES ('ANTONIO','84578915310');
-INSERT INTO ContaPrincipal (loginConta, cpfUsuario) VALUES ('JOSE','48521325611');
-INSERT INTO ContaPrincipal (loginConta, cpfUsuario) VALUES ('DANIEL','85675489652');
-INSERT INTO ContaPrincipal (loginConta, cpfUsuario) VALUES ('SHEILA','84578652312');
-INSERT INTO ContaPrincipal (loginConta, cpfUsuario) VALUES ('VICENTE','85478628910');
-INSERT INTO ContaPrincipal (loginConta, cpfUsuario) VALUES ('LUIZ','02894652723');
-INSERT INTO ContaPrincipal (loginConta, cpfUsuario) VALUES ('CARLOS','87546982359');
-INSERT INTO ContaPrincipal (loginConta, cpfUsuario) VALUES ('WELLINGTON','84598523659');
 
 CREATE TABLE SubConta(
 loginConta VARCHAR(15) NOT NULL,
+cpfUsuario VARCHAR(14),
 loginContaPrincipal VARCHAR(15) NOT NULL,
-cpfUsuario VARCHAR(14) NOT NULL,
 usoDoCartao INTEGER,
 acessoConteudoImproprio INTEGER,
 CONSTRAINT pkSubConta PRIMARY KEY (loginConta),
 CONSTRAINT fkSubContaConta foreign KEY (loginConta)
 REFERENCES Conta (login),
 CONSTRAINT fkSubContaContaPrincipal foreign KEY (loginContaPrincipal)
-REFERENCES ContaPrincipal (loginConta),
-CONSTRAINT fkSubContaUsuarios foreign KEY (cpfUsuario)
-REFERENCES Usuarios (cpf)
+REFERENCES ContaPrincipal (loginConta)
 );
 
 SELECT * FROM SUBCONTA;
-INSERT INTO SubConta (loginConta, loginContaPrincipal, cpfUsuario, usoDoCartao, acessoConteudoImproprio) VALUES ('ANA-SUB','ANA','15648615270',1,1);
-INSERT INTO SubConta (loginConta, loginContaPrincipal, cpfUsuario, usoDoCartao, acessoConteudoImproprio) VALUES ('BEATRIZ-SUB','BEATRIZ','48275389610',1,1);
-INSERT INTO SubConta (loginConta, loginContaPrincipal, cpfUsuario, usoDoCartao, acessoConteudoImproprio) VALUES ('ANTONIO-SUB','ANTONIO','84578915310',1,1);
-INSERT INTO SubConta (loginConta, loginContaPrincipal, cpfUsuario, usoDoCartao, acessoConteudoImproprio) VALUES ('JOSE-SUB','JOSE','48521325611',1,1);
-INSERT INTO SubConta (loginConta, loginContaPrincipal, cpfUsuario, usoDoCartao, acessoConteudoImproprio) VALUES ('DANIEL-SUB','DANIEL','85675489652',1,1);
-INSERT INTO SubConta (loginConta, loginContaPrincipal, cpfUsuario, usoDoCartao, acessoConteudoImproprio) VALUES ('SHEILA-SUB','SHEILA','84578652312',1,1);
-INSERT INTO SubConta (loginConta, loginContaPrincipal, cpfUsuario, usoDoCartao, acessoConteudoImproprio) VALUES ('VICENTE-SUB','VICENTE','85478628910',1,1);
-INSERT INTO SubConta (loginConta, loginContaPrincipal, cpfUsuario, usoDoCartao, acessoConteudoImproprio) VALUES ('LUIZ-SUB','LUIZ','02894652723',1,1);
-INSERT INTO SubConta (loginConta, loginContaPrincipal, cpfUsuario, usoDoCartao, acessoConteudoImproprio) VALUES ('CARLOS-SUB','CARLOS','87546982359',1,1);
-INSERT INTO SubConta (loginConta, loginContaPrincipal, cpfUsuario, usoDoCartao, acessoConteudoImproprio) VALUES ('WELLINGTON-SUB','WELLINGTON','84598523659',1,1);
+INSERT INTO SubConta (loginConta, loginContaPrincipal,  usoDoCartao, acessoConteudoImproprio) VALUES ('ANA-SUB','ANA',1,1);
+INSERT INTO SubConta (loginConta, loginContaPrincipal,  usoDoCartao, acessoConteudoImproprio) VALUES ('BEATRIZ-SUB','BEATRIZ',1,1);
+INSERT INTO SubConta (loginConta, loginContaPrincipal,  usoDoCartao, acessoConteudoImproprio) VALUES ('ANTONIO-SUB','ANTONIO',1,1);
+INSERT INTO SubConta (loginConta, loginContaPrincipal,  usoDoCartao, acessoConteudoImproprio) VALUES ('JOSE-SUB','JOSE',1,1);
+INSERT INTO SubConta (loginConta, loginContaPrincipal,  usoDoCartao, acessoConteudoImproprio) VALUES ('DANIEL-SUB','DANIEL',1,1);
+INSERT INTO SubConta (loginConta, loginContaPrincipal,  usoDoCartao, acessoConteudoImproprio) VALUES ('SHEILA-SUB','SHEILA',1,1);
+INSERT INTO SubConta (loginConta, loginContaPrincipal,  usoDoCartao, acessoConteudoImproprio) VALUES ('VICENTE-SUB','VICENTE',1,1);
+INSERT INTO SubConta (loginConta, loginContaPrincipal,  usoDoCartao, acessoConteudoImproprio) VALUES ('LUIZ-SUB','LUIZ',1,1);
+INSERT INTO SubConta (loginConta, loginContaPrincipal,  usoDoCartao, acessoConteudoImproprio) VALUES ('CARLOS-SUB','CARLOS',1,1);
+INSERT INTO SubConta (loginConta, loginContaPrincipal,  usoDoCartao, acessoConteudoImproprio) VALUES ('WELLINGTON-SUB','WELLINGTON',1,1);
 
 
 CREATE TABLE CartaoDeCredito(
@@ -509,3 +512,27 @@ REFERENCES Usuarios (cpf),
 CONSTRAINT fkAmizadeUsuariosSolicitado foreign KEY (cpfSolicitado)
 REFERENCES Usuarios (cpf)
 );
+
+insert into Amizade (cpfSolicitante, cpfSolicitado, dataAceite, dataSolicitacao) 
+values ('15648615270', '48275389610',TO_DATE('2023/05/12','yyyy/mm/dd'),TO_DATE('2023/05/12','yyyy/mm/dd'));
+insert into Amizade (cpfSolicitante, cpfSolicitado, dataAceite, dataSolicitacao) 
+values ('15648615270', '84578915310',TO_DATE('2023/05/12','yyyy/mm/dd'),TO_DATE('2023/05/12','yyyy/mm/dd'));
+insert into Amizade (cpfSolicitante, cpfSolicitado, dataAceite, dataSolicitacao) 
+values ('15648615270', '48521325611',TO_DATE('2023/05/12','yyyy/mm/dd'),TO_DATE('2023/05/12','yyyy/mm/dd'));
+insert into Amizade (cpfSolicitante, cpfSolicitado, dataAceite, dataSolicitacao) 
+values ('15648615270', '84578652312',TO_DATE('2023/05/12','yyyy/mm/dd'),TO_DATE('2023/05/12','yyyy/mm/dd'));
+insert into Amizade (cpfSolicitante, cpfSolicitado, dataAceite, dataSolicitacao) 
+values ('15648615270', '85478628910',TO_DATE('2023/05/12','yyyy/mm/dd'),TO_DATE('2023/05/12','yyyy/mm/dd'));
+insert into Amizade (cpfSolicitante, cpfSolicitado, dataAceite, dataSolicitacao) 
+values ('15648615270', '02894652723',TO_DATE('2023/05/12','yyyy/mm/dd'),TO_DATE('2023/05/12','yyyy/mm/dd'));
+insert into Amizade (cpfSolicitante, cpfSolicitado, dataAceite, dataSolicitacao) 
+values ('02894652723', '87546982359',TO_DATE('2023/05/12','yyyy/mm/dd'),TO_DATE('2023/05/12','yyyy/mm/dd'));
+insert into Amizade (cpfSolicitante, cpfSolicitado, dataAceite, dataSolicitacao) 
+values ('85478628910', '87546982359',TO_DATE('2023/05/12','yyyy/mm/dd'),TO_DATE('2023/05/12','yyyy/mm/dd'));
+insert into Amizade (cpfSolicitante, cpfSolicitado, dataAceite, dataSolicitacao) 
+values ('02894652723', '48275389610',TO_DATE('2023/05/12','yyyy/mm/dd'),TO_DATE('2023/05/12','yyyy/mm/dd'));
+insert into Amizade (cpfSolicitante, cpfSolicitado, dataAceite, dataSolicitacao) 
+values ('02894652723', '84578915310',TO_DATE('2023/05/12','yyyy/mm/dd'),TO_DATE('2023/05/12','yyyy/mm/dd'));
+
+
+select * from subconta;

@@ -92,7 +92,7 @@ public class UsuarioDao extends Dao<Usuario> {
     public String getFindAllStatment() {
         return "select  nome, pais, email, "
                 + "dataNascimento, cpf "
-                + " from " + TABLE;
+                + " from " + TABLE + " order by nome";
     }
 
     @Override

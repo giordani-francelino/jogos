@@ -6,8 +6,10 @@
  */
 package com.mycompany.jogos;
 
+import com.mycompany.jogos.entidades.Empresa;
 import com.mycompany.jogos.entidades.Usuario;
 import com.mycompany.jogos.repositorio.DbConnection;
+import com.mycompany.jogos.repositorio.EmpresaDao;
 import com.mycompany.jogos.repositorio.UsuarioDao;
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,6 +20,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import net.sf.jasperreports.engine.JRException;
@@ -41,6 +44,7 @@ public class IjfUsuario extends javax.swing.JInternalFrame {
     private IjfUsuario() {
         usuario = new Usuario();
         initComponents();
+        atualizarCmb();
     }
 
     public static IjfUsuario getInstance() {
@@ -62,11 +66,11 @@ public class IjfUsuario extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jpPrincipal = new javax.swing.JPanel();
-        jbtInserir = new javax.swing.JButton();
-        jbtAtualizar = new javax.swing.JButton();
-        jbtRecuperar = new javax.swing.JButton();
-        jbtExcluir = new javax.swing.JButton();
-        jbtListar = new javax.swing.JButton();
+        btnInserir = new javax.swing.JButton();
+        btnAtualizar = new javax.swing.JButton();
+        btnLimpar = new javax.swing.JButton();
+        btnExcluir = new javax.swing.JButton();
+        btnListar = new javax.swing.JButton();
         jtfCpf = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jtfNome = new javax.swing.JTextField();
@@ -77,43 +81,45 @@ public class IjfUsuario extends javax.swing.JInternalFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jftDataNascimento = new javax.swing.JFormattedTextField();
+        jLabel6 = new javax.swing.JLabel();
+        cmbUsuario = new javax.swing.JComboBox<>();
 
         setClosable(true);
         setIconifiable(true);
         setTitle("Cadastro de Usuários");
 
-        jbtInserir.setText("Inserir");
-        jbtInserir.addActionListener(new java.awt.event.ActionListener() {
+        btnInserir.setText("Inserir");
+        btnInserir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtInserirActionPerformed(evt);
+                btnInserirActionPerformed(evt);
             }
         });
 
-        jbtAtualizar.setText("Atualizar");
-        jbtAtualizar.addActionListener(new java.awt.event.ActionListener() {
+        btnAtualizar.setText("Atualizar");
+        btnAtualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtAtualizarActionPerformed(evt);
+                btnAtualizarActionPerformed(evt);
             }
         });
 
-        jbtRecuperar.setText("Recuperar");
-        jbtRecuperar.addActionListener(new java.awt.event.ActionListener() {
+        btnLimpar.setText("Limpar");
+        btnLimpar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtRecuperarActionPerformed(evt);
+                btnLimparActionPerformed(evt);
             }
         });
 
-        jbtExcluir.setText("Excluir");
-        jbtExcluir.addActionListener(new java.awt.event.ActionListener() {
+        btnExcluir.setText("Excluir");
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtExcluirActionPerformed(evt);
+                btnExcluirActionPerformed(evt);
             }
         });
 
-        jbtListar.setText("Listar");
-        jbtListar.addActionListener(new java.awt.event.ActionListener() {
+        btnListar.setText("Listar");
+        btnListar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtListarActionPerformed(evt);
+                btnListarActionPerformed(evt);
             }
         });
 
@@ -137,6 +143,14 @@ public class IjfUsuario extends javax.swing.JInternalFrame {
 
         jftDataNascimento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
 
+        jLabel6.setText("SELECIONA USUARIO");
+
+        cmbUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbUsuarioActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jpPrincipalLayout = new javax.swing.GroupLayout(jpPrincipal);
         jpPrincipal.setLayout(jpPrincipalLayout);
         jpPrincipalLayout.setHorizontalGroup(
@@ -145,15 +159,15 @@ public class IjfUsuario extends javax.swing.JInternalFrame {
                 .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jpPrincipalLayout.createSequentialGroup()
                         .addGap(24, 24, 24)
-                        .addComponent(jbtInserir, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnInserir, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jbtAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jbtRecuperar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnLimpar, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
-                        .addComponent(jbtExcluir)
+                        .addComponent(btnExcluir)
                         .addGap(18, 18, 18)
-                        .addComponent(jbtListar, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnListar, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jpPrincipalLayout.createSequentialGroup()
                         .addGap(56, 56, 56)
                         .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -161,18 +175,20 @@ public class IjfUsuario extends javax.swing.JInternalFrame {
                             .addComponent(jLabel5)
                             .addComponent(jLabel1)
                             .addComponent(jLabel2)
-                            .addComponent(jLabel3))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel6))
+                        .addGap(18, 18, 18)
+                        .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jftDataNascimento, javax.swing.GroupLayout.DEFAULT_SIZE, 298, Short.MAX_VALUE)
                             .addComponent(jtfEmail)
                             .addComponent(jtfPais, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 298, Short.MAX_VALUE)
                             .addComponent(jtfNome, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jtfCpf, javax.swing.GroupLayout.Alignment.TRAILING))))
+                            .addComponent(jtfCpf, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(cmbUsuario, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
 
-        jpPrincipalLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jbtExcluir, jbtInserir, jbtListar});
+        jpPrincipalLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnExcluir, btnInserir, btnListar});
 
         jpPrincipalLayout.setVerticalGroup(
             jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -197,15 +213,19 @@ public class IjfUsuario extends javax.swing.JInternalFrame {
                 .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
                     .addComponent(jftDataNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(cmbUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                 .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jbtRecuperar)
-                        .addComponent(jbtExcluir)
-                        .addComponent(jbtListar))
+                        .addComponent(btnLimpar)
+                        .addComponent(btnExcluir)
+                        .addComponent(btnListar))
                     .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jbtInserir)
-                        .addComponent(jbtAtualizar)))
+                        .addComponent(btnInserir)
+                        .addComponent(btnAtualizar)))
                 .addContainerGap())
         );
 
@@ -226,7 +246,7 @@ public class IjfUsuario extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
 
-    private void jbtInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtInserirActionPerformed
+    private void btnInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirActionPerformed
         getDadosTela();
         try {
             // TODO add your handling code here:
@@ -237,12 +257,13 @@ public class IjfUsuario extends javax.swing.JInternalFrame {
             new UsuarioDao().saveOrUpdate(usuario, true);
             limparDadosTela();
             getDadosTela();
+            atualizarCmb();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage());
         }
-    }//GEN-LAST:event_jbtInserirActionPerformed
+    }//GEN-LAST:event_btnInserirActionPerformed
 
-    private void jbtAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAtualizarActionPerformed
+    private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
         getDadosTela();
         try {
             // TODO add your handling code here:
@@ -253,29 +274,17 @@ public class IjfUsuario extends javax.swing.JInternalFrame {
             new UsuarioDao().saveOrUpdate(usuario, false);
             limparDadosTela();
             getDadosTela();
+            atualizarCmb();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage());
         }
-    }//GEN-LAST:event_jbtAtualizarActionPerformed
+    }//GEN-LAST:event_btnAtualizarActionPerformed
 
-    private void jbtRecuperarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRecuperarActionPerformed
-        getDadosTela();
-        try {
-            // TODO add your handling code here:
-            if (new UsuarioDao().findByPk(usuario) == null) {
-                JOptionPane.showMessageDialog(this, "não cadastraado");
-                return;
-            }
+    private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
+        limparDadosTela();
+    }//GEN-LAST:event_btnLimparActionPerformed
 
-            usuario = new UsuarioDao().findByPk(usuario);
-            setDadosTela();
-//        JOptionPane.showMessageDialog(this, "sucesso");
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage());
-        }
-    }//GEN-LAST:event_jbtRecuperarActionPerformed
-
-    private void jbtExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtExcluirActionPerformed
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
         getDadosTela();
         try {
             // TODO add your handling code here:
@@ -286,34 +295,25 @@ public class IjfUsuario extends javax.swing.JInternalFrame {
             new UsuarioDao().deleteByPk(usuario);
             limparDadosTela();
             getDadosTela();
+            atualizarCmb();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage());
         }
 
-    }//GEN-LAST:event_jbtExcluirActionPerformed
+    }//GEN-LAST:event_btnExcluirActionPerformed
 
-    private void jbtListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtListarActionPerformed
+    private void btnListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarActionPerformed
         // TODO add your handling code here:
-//        try (InputStream in = getClass().getResourceAsStream("/usuarios.jasper")) {
-//
-//            JasperPrint jasperPrint = JasperFillManager.fillReport(
-//                    in, null, DbConnection.getConnection());
-//            JasperViewer jasperViewer = new JasperViewer(jasperPrint, false);
-//            JDialog jDialog = new JDialog();
-//            jDialog.setContentPane(jasperViewer.getContentPane());
-//            jDialog.setSize(jasperViewer.getSize());
-//            jDialog.setTitle("Listagem de Usuários");
-//            jDialog.setModal(true);
-//            jDialog.setVisible(true);
-//
-//        } catch (IOException ex) {
-//            Logger.getLogger(IjfUsuario.class.getName()).log(Level.SEVERE, null, ex);
-//        } catch (JRException ex) {
-//            Logger.getLogger(IjfUsuario.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-            new Util().relatorios("/usuarios.jasper", "Listagem de Usuários");
 
-    }//GEN-LAST:event_jbtListarActionPerformed
+        new Util().relatorios("/usuarios.jasper", "Listagem de Usuários");
+
+    }//GEN-LAST:event_btnListarActionPerformed
+
+    private void cmbUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbUsuarioActionPerformed
+        // TODO add your handling code here:
+        usuario = (Usuario) cmbUsuario.getModel().getSelectedItem();
+        setDadosTela();
+    }//GEN-LAST:event_cmbUsuarioActionPerformed
 
     private void getDadosTela() {
         if (usuario == null) {
@@ -325,7 +325,7 @@ public class IjfUsuario extends javax.swing.JInternalFrame {
         usuario.setPaís(jtfPais.getText());
         if (!jftDataNascimento.getText().equals("")) {
             DateTimeFormatter formatters = DateTimeFormatter.ofPattern("d/MM/uuuu");
-            usuario.setDataNascimento(LocalDate.parse(jftDataNascimento.getText(),formatters));
+            usuario.setDataNascimento(LocalDate.parse(jftDataNascimento.getText(), formatters));
         } else {
             usuario.setDataNascimento(null);
         }
@@ -353,19 +353,34 @@ public class IjfUsuario extends javax.swing.JInternalFrame {
         jtfEmail.setText("");
         jtfPais.setText("");
         jftDataNascimento.setText("");
+        cmbUsuario.setSelectedItem(null);
     }
 
+    private void atualizarCmb() {
+
+        DefaultComboBoxModel<Usuario> comboBoxModelUsuario = new DefaultComboBoxModel<>();
+        try {
+            comboBoxModelUsuario.addAll(new UsuarioDao().findAll());
+        } catch (Exception ex) {
+            Logger.getLogger(IjfUsuario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        cmbUsuario.setModel(comboBoxModelUsuario);
+    }
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAtualizar;
+    private javax.swing.JButton btnExcluir;
+    private javax.swing.JButton btnInserir;
+    private javax.swing.JButton btnLimpar;
+    private javax.swing.JButton btnListar;
+    private javax.swing.JComboBox<Usuario> cmbUsuario;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JButton jbtAtualizar;
-    private javax.swing.JButton jbtExcluir;
-    private javax.swing.JButton jbtInserir;
-    private javax.swing.JButton jbtListar;
-    private javax.swing.JButton jbtRecuperar;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JFormattedTextField jftDataNascimento;
     private javax.swing.JPanel jpPrincipal;
     private javax.swing.JTextField jtfCpf;

@@ -96,7 +96,7 @@ public class EmpresaDao extends Dao<Empresa> {
     public String getFindAllStatment() {
         return "select website, nomeDoPresidente, dataDaFundacao, "
                 + "cidade, estado, pais, nomeDoFundador, nome "
-                + " from " + TABLE;
+                + " from " + TABLE + " order by nome";
     }
 
     @Override

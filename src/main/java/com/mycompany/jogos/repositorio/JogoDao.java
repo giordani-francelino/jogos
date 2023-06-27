@@ -102,7 +102,7 @@ public class JogoDao extends Dao<Jogo> {
     public String getFindAllStatment() {
         return "select  nome, nomeDesenvolvedor, nomeDistribuidor, "
                 + "sinopse, classificacaoEtaria, edicao, dataDeLancamento, id  "
-                + " from " + TABLE;
+                + " from " + TABLE + " order by nome";
     }
 
     @Override

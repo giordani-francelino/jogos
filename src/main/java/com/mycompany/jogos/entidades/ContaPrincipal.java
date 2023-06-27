@@ -16,10 +16,9 @@ import java.util.List;
  * @author Your Name &lt;francelino at ifnmg&gt;
  */
 public class ContaPrincipal {
-    
+
     private String loginConta;
     private Conta conta;
-    private Usuario usuario;
     private List<SubConta> subContas;
 
     public ContaPrincipal() {
@@ -27,11 +26,9 @@ public class ContaPrincipal {
 
     public ContaPrincipal(Conta conta, Usuario usuario) {
         this.conta = conta;
-        this.usuario = usuario;
     }
 
     //<editor-fold defaultstate="collapsed" desc="getters and setters">
-
     public String getLoginConta() {
         return loginConta;
     }
@@ -39,22 +36,13 @@ public class ContaPrincipal {
     public void setLoginConta(String loginConta) {
         this.loginConta = loginConta;
     }
-    
-    
+
     public Conta getConta() {
         return conta;
     }
 
     public void setConta(Conta conta) {
         this.conta = conta;
-    }
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
     }
 
     public List<SubConta> getSubContas() {
@@ -70,12 +58,9 @@ public class ContaPrincipal {
     }
 
 //</editor-fold>
-
     @Override
     public String toString() {
-        return  "conta=" + conta.getLogin() + ", usuario=" + usuario.getNome();
+        return "conta=" + conta.getLogin();
     }
-
-
 
 }

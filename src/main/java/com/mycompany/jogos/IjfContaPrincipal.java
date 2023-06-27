@@ -35,14 +35,7 @@ public class IjfContaPrincipal extends javax.swing.JInternalFrame {
         conta = new Conta();
         contaPrincipal = new ContaPrincipal();
         initComponents();
-        DefaultComboBoxModel<Usuario> comboBoxModelUsuario = new DefaultComboBoxModel<>();
-        try {
-            comboBoxModelUsuario.addAll(new UsuarioDao().findAll());
-        } catch (Exception ex) {
-            Logger.getLogger(IjfJogo.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        jcbUsuario.setModel(comboBoxModelUsuario);
-
+        atualizarCmb();
     }
 
     public static IjfContaPrincipal getInstance() {
@@ -79,8 +72,10 @@ public class IjfContaPrincipal extends javax.swing.JInternalFrame {
         jLabel5 = new javax.swing.JLabel();
         jtfRspostaDeSeguranca = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        jcbUsuario = new javax.swing.JComboBox<>();
+        cmbUsuario = new javax.swing.JComboBox<>();
         jpfSenha = new javax.swing.JPasswordField();
+        jLabel7 = new javax.swing.JLabel();
+        cmbConta = new javax.swing.JComboBox<>();
 
         setClosable(true);
         setIconifiable(true);
@@ -100,7 +95,7 @@ public class IjfContaPrincipal extends javax.swing.JInternalFrame {
             }
         });
 
-        jbtRecuperar.setText("Recuperar");
+        jbtRecuperar.setText("Limpar");
         jbtRecuperar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtRecuperarActionPerformed(evt);
@@ -135,6 +130,14 @@ public class IjfContaPrincipal extends javax.swing.JInternalFrame {
 
         jpfSenha.setText("jPasswordField1");
 
+        jLabel7.setText("SELECIONA CONTA PRINCIPAL");
+
+        cmbConta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbContaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jpPrincipalLayout = new javax.swing.GroupLayout(jpPrincipal);
         jpPrincipal.setLayout(jpPrincipalLayout);
         jpPrincipalLayout.setHorizontalGroup(
@@ -161,18 +164,20 @@ public class IjfContaPrincipal extends javax.swing.JInternalFrame {
                                     .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
                                     .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(12, 12, 12))
                             .addGroup(jpPrincipalLayout.createSequentialGroup()
                                 .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGap(102, 102, 102)))
                         .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jcbUsuario, 0, 275, Short.MAX_VALUE)
+                            .addComponent(cmbUsuario, 0, 275, Short.MAX_VALUE)
                             .addComponent(jtfRspostaDeSeguranca, javax.swing.GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE)
                             .addComponent(jtfPerguntaDeSeguranca, javax.swing.GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE)
                             .addComponent(jtfApelido, javax.swing.GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE)
                             .addComponent(jtfLogin, javax.swing.GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE)
-                            .addComponent(jpfSenha))))
+                            .addComponent(jpfSenha)
+                            .addComponent(cmbConta, 0, 275, Short.MAX_VALUE))))
                 .addContainerGap())
         );
 
@@ -204,8 +209,12 @@ public class IjfContaPrincipal extends javax.swing.JInternalFrame {
                 .addGap(16, 16, 16)
                 .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(jcbUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                    .addComponent(cmbUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(16, 16, 16)
+                .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(cmbConta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
                 .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jbtRecuperar)
@@ -247,6 +256,7 @@ public class IjfContaPrincipal extends javax.swing.JInternalFrame {
             contaPrincipal.setConta(conta);
             limparDadosTela();
             getDadosTela();
+            atualizarCmb();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage());
         }
@@ -258,6 +268,7 @@ public class IjfContaPrincipal extends javax.swing.JInternalFrame {
         try {
             // TODO add your handling code here:
             if (new ContaPrincipalDao().findByPk(contaPrincipal) == null) {
+                new ContaDao().deleteByPk(conta);
                 JOptionPane.showMessageDialog(this, "não cadastraado");
                 return;
             }
@@ -265,6 +276,7 @@ public class IjfContaPrincipal extends javax.swing.JInternalFrame {
 //            new ContaPrincipalDao().saveOrUpdate(contaPrincipal, false);
             limparDadosTela();
             getDadosTela();
+            atualizarCmb();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage());
         }
@@ -273,21 +285,8 @@ public class IjfContaPrincipal extends javax.swing.JInternalFrame {
 
     private void jbtRecuperarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRecuperarActionPerformed
         // TODO add your handling code here:
-        getDadosTela();
-        try {
-            // TODO add your handling code here:
-            if (new ContaPrincipalDao().findByPk(contaPrincipal) == null) {
-                JOptionPane.showMessageDialog(this, "não cadastraado");
-                return;
-            }
-            conta = new ContaDao().findByPk(conta);
-            contaPrincipal = new ContaPrincipalDao().findByPk(contaPrincipal);
-            contaPrincipal.setConta(conta);
-            setDadosTela();
-//        JOptionPane.showMessageDialog(this, "sucesso");
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage());
-        }
+        limparDadosTela();
+
     }//GEN-LAST:event_jbtRecuperarActionPerformed
 
     private void jbtExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtExcluirActionPerformed
@@ -296,13 +295,22 @@ public class IjfContaPrincipal extends javax.swing.JInternalFrame {
         try {
             // TODO add your handling code here:
             if (new ContaPrincipalDao().findByPk(contaPrincipal) == null) {
-                JOptionPane.showMessageDialog(this, "não cadastraado");
+                new ContaDao().deleteByPk(conta);
+                JOptionPane.showMessageDialog(this, "não cadastrado");
                 return;
             }
-            new ContaPrincipalDao().deleteByPk(contaPrincipal);
+
             new ContaDao().deleteByPk(conta);
+
+            if (new ContaDao().findByPk(conta) != null) {
+                JOptionPane.showMessageDialog(this, "não Excluido");
+                return;
+            }
+
+            new ContaPrincipalDao().deleteByPk(contaPrincipal);
             limparDadosTela();
             getDadosTela();
+            atualizarCmb();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage());
         }
@@ -312,6 +320,12 @@ public class IjfContaPrincipal extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         new Util().relatorios("/ContaPrincipal.jasper", "Listagem de ContaPrincipals");
     }//GEN-LAST:event_jbtListarActionPerformed
+
+    private void cmbContaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbContaActionPerformed
+        // TODO add your handling code here:       
+        conta = (Conta) cmbConta.getModel().getSelectedItem();
+        setDadosTela();
+    }//GEN-LAST:event_cmbContaActionPerformed
 
 //    private String login;
 //    private String senha;
@@ -329,7 +343,7 @@ public class IjfContaPrincipal extends javax.swing.JInternalFrame {
         conta.setRespostaDeSeguranca(jtfRspostaDeSeguranca.getText());
         contaPrincipal.setLoginConta(jtfLogin.getText());
         contaPrincipal.setConta(conta);
-        contaPrincipal.setUsuario((Usuario) jcbUsuario.getSelectedItem());
+        conta.setUsuario((Usuario) cmbUsuario.getSelectedItem());
     }
 
     private void setDadosTela() {
@@ -341,7 +355,7 @@ public class IjfContaPrincipal extends javax.swing.JInternalFrame {
         jtfApelido.setText(conta.getApelido());
         jtfPerguntaDeSeguranca.setText(conta.getPerguntaDeSeguranca());
         jtfRspostaDeSeguranca.setText(conta.getRespostaDeSeguranca());
-        jcbUsuario.getModel().setSelectedItem(contaPrincipal.getUsuario());
+        cmbUsuario.getModel().setSelectedItem(conta.getUsuario());
 
     }
 
@@ -351,22 +365,43 @@ public class IjfContaPrincipal extends javax.swing.JInternalFrame {
         jtfApelido.setText("");
         jtfPerguntaDeSeguranca.setText("");
         jtfRspostaDeSeguranca.setText("");
-        jcbUsuario.getModel().setSelectedItem(null);
+        cmbUsuario.getModel().setSelectedItem(null);
+//        cmbConta.getModel().setSelectedItem(null);
+    }
+
+    private void atualizarCmb() {
+        DefaultComboBoxModel<Usuario> comboBoxModelUsuario = new DefaultComboBoxModel<>();
+        try {
+            comboBoxModelUsuario.addAll(new UsuarioDao().findAll());
+        } catch (Exception ex) {
+            Logger.getLogger(IjfContaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        cmbUsuario.setModel(comboBoxModelUsuario);
+
+        DefaultComboBoxModel<Conta> comboBoxModelConta = new DefaultComboBoxModel<>();
+        try {
+            comboBoxModelConta.addAll(new ContaDao().localizarTodasContasPincipais());
+        } catch (Exception ex) {
+            Logger.getLogger(IjfContaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        cmbConta.setModel(comboBoxModelConta);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<Conta> cmbConta;
+    private javax.swing.JComboBox<Usuario> cmbUsuario;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JButton jbtAtualizar;
     private javax.swing.JButton jbtExcluir;
     private javax.swing.JButton jbtInserir;
     private javax.swing.JButton jbtListar;
     private javax.swing.JButton jbtRecuperar;
-    private javax.swing.JComboBox<Usuario> jcbUsuario;
     private javax.swing.JPanel jpPrincipal;
     private javax.swing.JPasswordField jpfSenha;
     private javax.swing.JTextField jtfApelido;

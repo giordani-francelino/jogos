@@ -41,13 +41,13 @@ public class SubContaDao extends Dao<SubConta> {
 
     @Override
     public String getSaveStatment() {
-        return "insert into " + TABLE + "(loginContaPrincipal, cpfUsuario, "
-                + "usoDoCartao, acessoConteudoImproprio, loginConta)  values (?, ?, ?, ?, ?)";
+        return "insert into " + TABLE + "(loginContaPrincipal, "
+                + "usoDoCartao, acessoConteudoImproprio, loginConta)  values (?, ?, ?, ?)";
     }
 
     @Override
     public String getUpdateStatment() {
-        return "update " + TABLE + " set loginContaPrincipal = ?, cpfUsuario = ?, "
+        return "update " + TABLE + " set loginContaPrincipal = ?, "
                 + "usoDoCartao = ?, acessoConteudoImproprio = ? where loginConta = ?";
     }
 
@@ -64,14 +64,12 @@ public class SubContaDao extends Dao<SubConta> {
             }
             if (atualizar == null) {
                 pstmt.setString(1, e.getContaPrincipal().getLoginConta());
-                pstmt.setString(2, e.getUsuario().getCpf());
             } else {
                 pstmt.setString(1, atualizar.getContaPrincipal().getLoginConta());
-                pstmt.setString(2, atualizar.getUsuario().getCpf());
             }
-            pstmt.setInt(3, e.getUsoDoCartao());
-            pstmt.setInt(4, e.getAcessoConteudoImproprio());
-            pstmt.setString(5, e.getLoginConta());
+            pstmt.setInt(2, e.getUsoDoCartao());
+            pstmt.setInt(3, e.getAcessoConteudoImproprio());
+            pstmt.setString(4, e.getLoginConta());
 
         } catch (SQLException ex) {
             Logger.getLogger(SubContaDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -96,7 +94,7 @@ public class SubContaDao extends Dao<SubConta> {
 
     @Override
     public String getFindByPkStatment() {
-        return "select loginContaPrincipal, cpfUsuario, "
+        return "select loginContaPrincipal, "
                 + "usoDoCartao, acessoConteudoImproprio, loginConta "
                 + " from " + TABLE + " where loginConta = ?";
     }
@@ -114,9 +112,9 @@ public class SubContaDao extends Dao<SubConta> {
 
     @Override
     public String getFindAllStatment() {
-        return "select  loginContaPrincipal, cpfUsuario, "
+        return "select  loginContaPrincipal, "
                 + "usoDoCartao, acessoConteudoImproprio, loginConta "
-                + " from " + TABLE;
+                + " from " + TABLE + " order by loginConta";
     }
 
     @Override
@@ -139,12 +137,7 @@ public class SubContaDao extends Dao<SubConta> {
             ContaPrincipal contaPrincipal = new ContaPrincipal();
             contaPrincipal.setLoginConta(resultSet.getString("loginContaPrincipal"));
             subConta.setContaPrincipal(contaPrincipalDao.findByPk(contaPrincipal));
-
-            UsuarioDao usuarioDao = new UsuarioDao();
-            Usuario usuario = new Usuario();
-            usuario.setCpf(resultSet.getString("cpfUsuario"));
-            subConta.setUsuario(usuarioDao.findByPk(usuario));
-
+            
             subConta.setUsoDoCartao(resultSet.getInt("usoDoCartao"));
             subConta.setAcessoConteudoImproprio(resultSet.getInt("acessoConteudoImproprio"));
 

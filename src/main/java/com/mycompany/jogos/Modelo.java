@@ -11,21 +11,21 @@ package com.mycompany.jogos;
  * @author Luis Guisso <luis dot guisso at ifnmg dot edu dot br>
  * @version 0.0.1, 16/08/2021
  */
-public class InternaC extends javax.swing.JInternalFrame {
+public class Modelo extends javax.swing.JInternalFrame {
     
-    private static InternaC self;
+    private static Modelo self;
 
     /**
      * Creates new form InternaC
      */
-    private InternaC() {
+    private Modelo() {
         initComponents();
     }
     
-    public static InternaC getInstance() {
+    public static Modelo getInstance() {
         // Caso a janela ainda não tenha sido instanciada
         if(self == null) {
-            self = new InternaC();
+            self = new Modelo();
         }
         
         return self;

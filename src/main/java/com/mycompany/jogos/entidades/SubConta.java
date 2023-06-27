@@ -19,7 +19,6 @@ public class SubConta {
 
     private String loginConta;
     private Conta conta;
-    private Usuario usuario;
     private ContaPrincipal contaPrincipal;
     private int usoDoCartao;
     private int acessoConteudoImproprio;
@@ -31,7 +30,6 @@ public class SubConta {
 
         this();
         this.conta = conta;
-        this.usuario = usuario;
         this.contaPrincipal = contaPrincipal;
         this.usoDoCartao = usoDoCartao;
         this.acessoConteudoImproprio = acessoConteudoImproprio;
@@ -55,14 +53,6 @@ public class SubConta {
     
     public void setConta(Conta conta) {
         this.conta = conta;
-    }
-    
-    public Usuario getUsuario() {
-        return usuario;
-    }
-    
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
     }
     
     public ContaPrincipal getContaPrincipal() {
@@ -94,7 +84,7 @@ public class SubConta {
 
     @Override
     public String toString() {
-        return "SubConta{" + "conta=" + conta + ", usuario=" + usuario + ", contaPrincipal=" + contaPrincipal + ", usoDoCartao=" + usoDoCartao + ", acessoConteudoImproprio=" + acessoConteudoImproprio + '}';
+        return  conta.getLogin();
     }
  
     

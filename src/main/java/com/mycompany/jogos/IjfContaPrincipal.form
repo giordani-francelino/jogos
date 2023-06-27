@@ -66,6 +66,7 @@
                                       <Component id="jLabel3" alignment="1" max="32767" attributes="0"/>
                                       <Component id="jLabel1" max="32767" attributes="0"/>
                                       <Component id="jLabel6" max="32767" attributes="0"/>
+                                      <Component id="jLabel7" max="32767" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                               </Group>
@@ -75,12 +76,13 @@
                               </Group>
                           </Group>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="jcbUsuario" alignment="0" pref="275" max="32767" attributes="0"/>
+                              <Component id="cmbUsuario" alignment="0" pref="275" max="32767" attributes="0"/>
                               <Component id="jtfRspostaDeSeguranca" alignment="0" pref="275" max="32767" attributes="0"/>
                               <Component id="jtfPerguntaDeSeguranca" alignment="0" pref="275" max="32767" attributes="0"/>
                               <Component id="jtfApelido" alignment="0" pref="275" max="32767" attributes="0"/>
                               <Component id="jtfLogin" alignment="0" pref="275" max="32767" attributes="0"/>
                               <Component id="jpfSenha" alignment="0" max="32767" attributes="0"/>
+                              <Component id="cmbConta" alignment="0" pref="275" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -119,9 +121,14 @@
                   <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jcbUsuario" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="cmbUsuario" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="33" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="cmbConta" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace pref="19" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                           <Component id="jbtRecuperar" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -157,7 +164,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="jbtRecuperar">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Recuperar"/>
+            <Property name="text" type="java.lang.String" value="Limpar"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbtRecuperarActionPerformed"/>
@@ -217,7 +224,7 @@
             <Property name="text" type="java.lang.String" value="USU&#xc1;RIO"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="jcbUsuario">
+        <Component class="javax.swing.JComboBox" name="cmbUsuario">
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Usuario&gt;"/>
           </AuxValues>
@@ -226,6 +233,19 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="jPasswordField1"/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel7">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="SELECIONA CONTA PRINCIPAL"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="cmbConta">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmbContaActionPerformed"/>
+          </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Conta&gt;"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>

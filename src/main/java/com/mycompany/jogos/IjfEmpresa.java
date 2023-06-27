@@ -6,9 +6,13 @@
  */
 package com.mycompany.jogos;
 
+import com.mycompany.jogos.entidades.Conta;
 import com.mycompany.jogos.entidades.Empresa;
+import com.mycompany.jogos.entidades.Usuario;
+import com.mycompany.jogos.repositorio.ContaDao;
 import com.mycompany.jogos.repositorio.DbConnection;
 import com.mycompany.jogos.repositorio.EmpresaDao;
+import com.mycompany.jogos.repositorio.UsuarioDao;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Date;
@@ -17,6 +21,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import net.sf.jasperreports.engine.JRException;
@@ -40,6 +45,7 @@ public class IjfEmpresa extends javax.swing.JInternalFrame {
     private IjfEmpresa() {
         empresa = new Empresa();
         initComponents();
+        atualizarCmb();
     }
 
     public static IjfEmpresa getInstance() {
@@ -61,11 +67,11 @@ public class IjfEmpresa extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jpPrincipal = new javax.swing.JPanel();
-        jbtInserir = new javax.swing.JButton();
-        jbtAtualizar = new javax.swing.JButton();
-        jbtRecuperar = new javax.swing.JButton();
-        jbtExcluir = new javax.swing.JButton();
-        jbtListar = new javax.swing.JButton();
+        btnInserir = new javax.swing.JButton();
+        btnAtualizar = new javax.swing.JButton();
+        btnLimpar = new javax.swing.JButton();
+        btnExcluir = new javax.swing.JButton();
+        btnListar = new javax.swing.JButton();
         jtfNome = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -82,44 +88,46 @@ public class IjfEmpresa extends javax.swing.JInternalFrame {
         jtfNomeDoFundador = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jffDataDaFundacao = new javax.swing.JFormattedTextField();
+        jLabel9 = new javax.swing.JLabel();
+        cmbEmpresa = new javax.swing.JComboBox<>();
 
         setClosable(true);
         setIconifiable(true);
         setTitle("Empresa");
         setToolTipText("");
 
-        jbtInserir.setText("Inserir");
-        jbtInserir.addActionListener(new java.awt.event.ActionListener() {
+        btnInserir.setText("Inserir");
+        btnInserir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtInserirActionPerformed(evt);
+                btnInserirActionPerformed(evt);
             }
         });
 
-        jbtAtualizar.setText("Atualizar");
-        jbtAtualizar.addActionListener(new java.awt.event.ActionListener() {
+        btnAtualizar.setText("Atualizar");
+        btnAtualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtAtualizarActionPerformed(evt);
+                btnAtualizarActionPerformed(evt);
             }
         });
 
-        jbtRecuperar.setText("Recuperar");
-        jbtRecuperar.addActionListener(new java.awt.event.ActionListener() {
+        btnLimpar.setText("Limpar");
+        btnLimpar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtRecuperarActionPerformed(evt);
+                btnLimparActionPerformed(evt);
             }
         });
 
-        jbtExcluir.setText("Excluir");
-        jbtExcluir.addActionListener(new java.awt.event.ActionListener() {
+        btnExcluir.setText("Excluir");
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtExcluirActionPerformed(evt);
+                btnExcluirActionPerformed(evt);
             }
         });
 
-        jbtListar.setText("Listar");
-        jbtListar.addActionListener(new java.awt.event.ActionListener() {
+        btnListar.setText("Listar");
+        btnListar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtListarActionPerformed(evt);
+                btnListarActionPerformed(evt);
             }
         });
 
@@ -143,6 +151,14 @@ public class IjfEmpresa extends javax.swing.JInternalFrame {
 
         jffDataDaFundacao.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
 
+        jLabel9.setText("SELECIONA EMPRESA");
+
+        cmbEmpresa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbEmpresaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jpPrincipalLayout = new javax.swing.GroupLayout(jpPrincipal);
         jpPrincipal.setLayout(jpPrincipalLayout);
         jpPrincipalLayout.setHorizontalGroup(
@@ -151,15 +167,15 @@ public class IjfEmpresa extends javax.swing.JInternalFrame {
                 .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jpPrincipalLayout.createSequentialGroup()
                         .addGap(24, 24, 24)
-                        .addComponent(jbtInserir, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnInserir, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jbtAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jbtRecuperar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnLimpar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
-                        .addComponent(jbtExcluir)
+                        .addComponent(btnExcluir)
                         .addGap(18, 18, 18)
-                        .addComponent(jbtListar, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnListar, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpPrincipalLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -184,18 +200,20 @@ public class IjfEmpresa extends javax.swing.JInternalFrame {
                                     .addComponent(jLabel4)
                                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(34, 34, 34)
                                 .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jtfNomeDoFundador, javax.swing.GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)
                                     .addComponent(jtfPais)
                                     .addComponent(jtfEstado)
                                     .addComponent(jffDataDaFundacao)
-                                    .addComponent(jtfCidade))))))
+                                    .addComponent(jtfCidade)
+                                    .addComponent(cmbEmpresa, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
                 .addContainerGap())
         );
 
-        jpPrincipalLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jbtExcluir, jbtInserir, jbtListar});
+        jpPrincipalLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnExcluir, btnInserir, btnListar});
 
         jpPrincipalLayout.setVerticalGroup(
             jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -232,15 +250,19 @@ public class IjfEmpresa extends javax.swing.JInternalFrame {
                 .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jtfNomeDoFundador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addGap(15, 15, 15)
+                .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(cmbEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jbtRecuperar)
-                        .addComponent(jbtExcluir)
-                        .addComponent(jbtListar))
+                        .addComponent(btnLimpar)
+                        .addComponent(btnExcluir)
+                        .addComponent(btnListar))
                     .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jbtInserir)
-                        .addComponent(jbtAtualizar)))
+                        .addComponent(btnInserir)
+                        .addComponent(btnAtualizar)))
                 .addContainerGap())
         );
 
@@ -250,7 +272,7 @@ public class IjfEmpresa extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jpPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 14, Short.MAX_VALUE))
+                .addGap(0, 25, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -263,7 +285,7 @@ public class IjfEmpresa extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jbtInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtInserirActionPerformed
+    private void btnInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirActionPerformed
         // TODO add your handling code here:
         getDadosTela();
         try {
@@ -275,13 +297,14 @@ public class IjfEmpresa extends javax.swing.JInternalFrame {
             new EmpresaDao().saveOrUpdate(empresa, true);
             limparDadosTela();
             getDadosTela();
+            atualizarCmb();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage());
         }
 
-    }//GEN-LAST:event_jbtInserirActionPerformed
+    }//GEN-LAST:event_btnInserirActionPerformed
 
-    private void jbtAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAtualizarActionPerformed
+    private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
         // TODO add your handling code here:
         getDadosTela();
         try {
@@ -293,32 +316,19 @@ public class IjfEmpresa extends javax.swing.JInternalFrame {
             new EmpresaDao().saveOrUpdate(empresa, false);
             limparDadosTela();
             getDadosTela();
+            atualizarCmb();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage());
         }
 
-    }//GEN-LAST:event_jbtAtualizarActionPerformed
+    }//GEN-LAST:event_btnAtualizarActionPerformed
 
-    private void jbtRecuperarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRecuperarActionPerformed
+    private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
         // TODO add your handling code here:
-        getDadosTela();
-        try {
-            // TODO add your handling code here:
-            if (new EmpresaDao().findByPk(empresa) == null) {
-                JOptionPane.showMessageDialog(this, "não cadastraado");
-                return;
-            }
+        limparDadosTela();
+    }//GEN-LAST:event_btnLimparActionPerformed
 
-            empresa = new EmpresaDao().findByPk(empresa);
-            setDadosTela();
-//        JOptionPane.showMessageDialog(this, "sucesso");
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage());
-        }
-
-    }//GEN-LAST:event_jbtRecuperarActionPerformed
-
-    private void jbtExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtExcluirActionPerformed
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
         // TODO add your handling code here:
         getDadosTela();
         try {
@@ -330,17 +340,25 @@ public class IjfEmpresa extends javax.swing.JInternalFrame {
             new EmpresaDao().deleteByPk(empresa);
             limparDadosTela();
             getDadosTela();
+            atualizarCmb();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage());
         }
-    }//GEN-LAST:event_jbtExcluirActionPerformed
+    }//GEN-LAST:event_btnExcluirActionPerformed
 
-    private void jbtListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtListarActionPerformed
+    private void btnListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarActionPerformed
         // TODO add your handling code here:
-         
+
         new Util().relatorios("/Empresa.jasper", "Listagem de Empresas");
 
-    }//GEN-LAST:event_jbtListarActionPerformed
+    }//GEN-LAST:event_btnListarActionPerformed
+
+    private void cmbEmpresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbEmpresaActionPerformed
+        // TODO add your handling code here:
+        empresa = (Empresa) cmbEmpresa.getModel().getSelectedItem();
+        setDadosTela();
+
+    }//GEN-LAST:event_cmbEmpresaActionPerformed
 
     private void getDadosTela() {
         if (empresa == null) {
@@ -389,9 +407,28 @@ public class IjfEmpresa extends javax.swing.JInternalFrame {
         jtfEstado.setText("");
         jtfPais.setText("");
         jtfNomeDoFundador.setText("");
+        cmbEmpresa.setSelectedItem(null);
     }
 
+    private void atualizarCmb() {
+
+        DefaultComboBoxModel<Empresa> comboBoxModelEmpresa = new DefaultComboBoxModel<>();
+        try {
+            comboBoxModelEmpresa.addAll(new EmpresaDao().findAll());
+        } catch (Exception ex) {
+            Logger.getLogger(IjfEmpresa.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        cmbEmpresa.setModel(comboBoxModelEmpresa);
+    }
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAtualizar;
+    private javax.swing.JButton btnExcluir;
+    private javax.swing.JButton btnInserir;
+    private javax.swing.JButton btnLimpar;
+    private javax.swing.JButton btnListar;
+    private javax.swing.JComboBox<Empresa> cmbEmpresa;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -400,11 +437,7 @@ public class IjfEmpresa extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JButton jbtAtualizar;
-    private javax.swing.JButton jbtExcluir;
-    private javax.swing.JButton jbtInserir;
-    private javax.swing.JButton jbtListar;
-    private javax.swing.JButton jbtRecuperar;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JFormattedTextField jffDataDaFundacao;
     private javax.swing.JPanel jpPrincipal;
     private javax.swing.JTextField jtfCidade;

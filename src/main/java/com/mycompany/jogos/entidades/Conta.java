@@ -28,6 +28,7 @@ public class Conta {
     private String apelido;
     private String perguntaDeSeguranca;
     private String respostaDeSeguranca;
+    private Usuario usuario;
 
     public Conta() {
     }
@@ -81,6 +82,14 @@ public class Conta {
     
     public void setRespostaDeSeguranca(String respostaDeSeguranca) {
         this.respostaDeSeguranca = respostaDeSeguranca;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
     
     
