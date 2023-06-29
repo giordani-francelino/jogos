@@ -1,2 +1,0 @@
-
-C:\dev\poo\softwares\netbeans-16-bin\java\maven\bin mvn install:install-file -Dfile=C:/dev/bd/jogos/ojdbc8.jar -DgroupId=com.oracle -DartifactId=ojdbc8 -Dversion=19.3 -Dpackaging=jar

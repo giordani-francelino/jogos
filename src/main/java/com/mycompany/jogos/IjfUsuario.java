@@ -139,7 +139,7 @@ public class IjfUsuario extends javax.swing.JInternalFrame {
 
         jLabel4.setText("E-MAIL");
 
-        jLabel5.setText("NASCIMENTO (dd/mmyyyy)");
+        jLabel5.setText("NASCIMENTO (dd/mm/aaaa)");
 
         jftDataNascimento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
 
@@ -179,9 +179,9 @@ public class IjfUsuario extends javax.swing.JInternalFrame {
                             .addComponent(jLabel6))
                         .addGap(18, 18, 18)
                         .addGroup(jpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jftDataNascimento, javax.swing.GroupLayout.DEFAULT_SIZE, 298, Short.MAX_VALUE)
+                            .addComponent(jftDataNascimento, javax.swing.GroupLayout.DEFAULT_SIZE, 293, Short.MAX_VALUE)
                             .addComponent(jtfEmail)
-                            .addComponent(jtfPais, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 298, Short.MAX_VALUE)
+                            .addComponent(jtfPais, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 293, Short.MAX_VALUE)
                             .addComponent(jtfNome, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jtfCpf, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(cmbUsuario, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))

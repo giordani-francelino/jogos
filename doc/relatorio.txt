@@ -1,0 +1,31 @@
+Linguagem Java verão 11
+
+TIBCO Jaspersoft® Studio 6.16.0 - Visual Designer for JasperReports 6.16.0. 
+Copyright (C) 2010 - 2020 TIBCO Software Inc.
+
+Dependencias
+net/sf/jasperreports/jasperreports/6.20.5/jasperreports-6.20.5.jar
+com/oracle/ojdbc8/19.3/ojdbc8-19.3.jar
+
+how-to
+As janelas de manipulação dos dados seguem um padrão e podem
+ser acessadas no menu cadastro
+
+Botão Inserir: basta prencher os campos exceto o combobox inferior, antes de clicar.
+
+Botão Aualizer: Selecione o objeto no cambobox inferior e 
+                alterar os campos desejados, antes de clicar.
+
+Botão Limpar: limpa os dados da tela sem alterar ou incluir no banco de dados.
+
+Botão excluir: Selecione o objeto no cambobox inferior depois clicar.
+
+
+Itens do Tatrabalho:
+
+3.1 - Cadstro de jogos e empresas.
+
+3.2 - Cadastro de usuários, contas principais e subcontas.
+
+3.3 - Não foi possível concluir por falta de tempo.
+
