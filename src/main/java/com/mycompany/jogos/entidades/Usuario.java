@@ -30,7 +30,7 @@ public class Usuario {
     
 
     public Usuario() {
-        subContas = new ArrayList();
+        subContas = new ArrayList<SubConta>();
     }
 
     public Usuario(String cpf, String nome, String país, String email, LocalDate dataNascimento, ContaPrincipal contaprincipal, List<SubConta> subContas) {

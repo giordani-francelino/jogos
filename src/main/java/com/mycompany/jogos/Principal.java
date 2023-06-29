@@ -51,7 +51,6 @@ public class Principal extends javax.swing.JFrame {
         mnuCadastroSubConta = new javax.swing.JMenuItem();
         mnuCadastroEmpresa = new javax.swing.JMenuItem();
         mnuCadastroJogo = new javax.swing.JMenuItem();
-        mnuCadastroRelatorio = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -107,14 +106,6 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         mnuCadastro.add(mnuCadastroJogo);
-
-        mnuCadastroRelatorio.setText("Relatorios");
-        mnuCadastroRelatorio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnuCadastroRelatorioActionPerformed(evt);
-            }
-        });
-        mnuCadastro.add(mnuCadastroRelatorio);
 
         mnuPrincipal.add(mnuCadastro);
 
@@ -192,11 +183,6 @@ public class Principal extends javax.swing.JFrame {
 
         tornarVisivel(ijfJogo);
     }//GEN-LAST:event_mnuCadastroJogoActionPerformed
-
-    private void mnuCadastroRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCadastroRelatorioActionPerformed
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_mnuCadastroRelatorioActionPerformed
 
     private void mnuCadastroUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCadastroUsuarioActionPerformed
         // TODO add your handling code here:
@@ -286,7 +272,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnuCadastroContaPrincipal;
     private javax.swing.JMenuItem mnuCadastroEmpresa;
     private javax.swing.JMenuItem mnuCadastroJogo;
-    private javax.swing.JMenuItem mnuCadastroRelatorio;
     private javax.swing.JMenuItem mnuCadastroSubConta;
     private javax.swing.JMenuItem mnuCadastroUsuario;
     private javax.swing.JMenuBar mnuPrincipal;
